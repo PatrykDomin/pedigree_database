@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles'
+import { primaryColor, secondaryColor, textPrimaryColor } from './constants'
 
 export const theme = createMuiTheme({
   spacing: 4,
@@ -6,7 +7,10 @@ export const theme = createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         'h1, h2, h3, h4, h5': {
-          margin: '10px 0',
+          margin: 0,
+        },
+        p: {
+          margin: 0,
         },
         'body, html': {
           height: '100%',
@@ -16,7 +20,7 @@ export const theme = createMuiTheme({
           height: '100%',
         },
         textarea: {
-          fontFamily: `"Mulish", "Helvetica", "Arial", sans-serif`,
+          fontFamily: `'Roboto Slab', serif`,
         },
       },
     },
@@ -27,7 +31,7 @@ export const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: `"Mulish", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `'Roboto Slab', serif`,
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
@@ -36,6 +40,17 @@ export const theme = createMuiTheme({
   },
   shape: {
     borderRadius: 10,
+  },
+  palette: {
+    primary: {
+      main: primaryColor,
+    },
+    secondary: {
+      main: secondaryColor,
+    },
+    text: {
+      primary: textPrimaryColor,
+    },
   },
 })
 
