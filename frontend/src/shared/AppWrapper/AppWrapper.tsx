@@ -7,7 +7,7 @@ export const AppWrapper: React.FC = ({ children }) => {
   return (
     <div className={styles.appWrapper}>
       <Navbar />
-      <>{children}</>
+      <div className={styles.children}>{children}</div>
     </div>
   )
 }

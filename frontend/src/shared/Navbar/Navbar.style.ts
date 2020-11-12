@@ -6,7 +6,7 @@ export default makeStyles((theme: Theme) => ({
     height: 100,
     width: '100%',
     backgroundColor: theme.palette.primary.light,
-    border: `1px solid ${theme.palette.common.black}`,
+    borderBottom: `1px solid ${theme.palette.common.black}`,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -6,4 +6,7 @@ export default makeStyles((theme: Theme) => ({
     minWidth: '100%',
     backgroundColor: theme.palette.primary.main,
   },
+  children: {
+    padding: theme.spacing(9),
+  },
 }))

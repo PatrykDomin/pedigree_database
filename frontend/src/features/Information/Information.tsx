@@ -5,6 +5,7 @@ import Dogs from '../../images/dogs_older_s.jpg'
 
 export const Information: React.FC = () => {
   const styles = useStyles()
+
   return (
     <div className={styles.information}>
       <div className={styles.row}>
@@ -27,7 +28,10 @@ export const Information: React.FC = () => {
             magnam debitis optio ex suscipit asperiores.
           </p>
         </div>
-        <img src={Nela} alt="Nela" />
+        <div
+          className={styles.image}
+          style={{ backgroundImage: `url(${Nela})` }}
+        />
       </div>
       <div className={styles.row}>
         <div className={styles.content}>
@@ -49,7 +53,10 @@ export const Information: React.FC = () => {
             magnam debitis optio ex suscipit asperiores.
           </p>
         </div>
-        <img src={Dogs} alt="dogs" />
+        <div
+          className={styles.image}
+          style={{ backgroundImage: `url(${Dogs})` }}
+        />
       </div>
     </div>
   )

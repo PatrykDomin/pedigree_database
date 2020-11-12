@@ -1,0 +1,67 @@
+{
+  "dogs": [
+    {
+      "pkr": 0,
+      "name": "Harry",
+      "parent1": "Helios",
+      "parent2": "Ticca",
+      "breeding": "Bahaticca"
+    },
+    {
+      "pkr": 1,
+      "name": "Luna",
+      "parent1": "Harry",
+      "parent2": "Nimba",
+      "breeding": "Bahaticca"
+    },
+    {
+      "pkr": 2,
+      "name": "Lilka",
+      "parent1": "Helios",
+      "parent2": "Ticca",
+      "breeding": "Bahaticca"
+    },
+    {
+      "pkr": 3,
+      "name": "Ticca",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "Bahaticca"
+    },
+    {
+      "pkr": 4,
+      "name": "Helios",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "InnaHodowla"
+    },
+    {
+      "pkr": 5,
+      "name": "Nela",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "Natalkowo"
+    },
+    {
+      "pkr": 6,
+      "name": "Cheerios",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "Myciu"
+    },
+    {
+      "pkr": 7,
+      "name": "Geniusz",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "Afrikata"
+    },
+    {
+      "pkr": 8,
+      "name": "Kenya",
+      "parent1": "",
+      "parent2": "",
+      "breeding": "Vagabondo"
+    }
+  ]
+}

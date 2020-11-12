@@ -25,6 +25,7 @@ export default makeStyles((theme: Theme) => ({
   },
   content: {
     width: '60%',
+    padding: theme.spacing(0, 3),
     '& h2': {
       fontSize: 28,
       marginBottom: theme.spacing(3),
@@ -33,5 +34,13 @@ export default makeStyles((theme: Theme) => ({
       fontSize: 14,
       letterSpacing: 0.8,
     },
+  },
+  image: {
+    width: '32%',
+    minWidth: 300,
+    height: 280,
+    borderRadius: 16,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
   },
 }))
