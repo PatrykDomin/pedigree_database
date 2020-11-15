@@ -1,16 +1,24 @@
-import React, { useMemo } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import useStyles from './Dogs.style'
 import ListWrapper from '../../shared/ListWrapper'
 import { Button, Grid } from '@material-ui/core'
-import dogsListData from '../../dogs.json'
 import DataCell from '../../shared/DataCell'
+import { IDog } from '../../core/apiTypes/apiType'
+import { getAllDogs } from './Dogs.utils'
 
 export const Dogs: React.FC = () => {
   const styles = useStyles()
 
-  const dogsList = useMemo(() => {
-    return dogsListData.dogs
+  const [dogs, setDogs] = useState<IDog[]>([])
+
+  const getDogs = useCallback(async () => {
+    const dogs = await getAllDogs()
+    setDogs(dogs)
   }, [])
+
+  useEffect(() => {
+    getDogs()
+  }, [getDogs])
 
   return (
     <ListWrapper
@@ -22,23 +30,23 @@ export const Dogs: React.FC = () => {
       }
     >
       <Grid container direction="column" className={styles.table}>
-        {dogsList.map(({ pkr, name, parent1, parent2, breeding }, i) => {
+        {dogs.map(({ pkr, name, momId, dadId, breeding }) => {
           return (
-            <Grid container direction="row" className={styles.row}>
-              <Grid item xs={1}>
+            <Grid key={pkr} container direction="row" className={styles.row}>
+              <Grid item xs={2}>
                 <DataCell header="Nr PKR" content={pkr.toString()} />
               </Grid>
               <Grid item xs={3}>
                 <DataCell header="Imię" content={name} />
               </Grid>
-              <Grid item xs={3}>
-                <DataCell header="Ojciec" content={parent1 || '-'} />
-              </Grid>
-              <Grid item xs={3}>
-                <DataCell header="Matka" content={parent2 || '-'} />
+              <Grid item xs={2}>
+                <DataCell header="Matka" content={momId || '-'} />
               </Grid>
               <Grid item xs={2}>
-                <DataCell header="Hodowla" content={breeding} />
+                <DataCell header="Ojciec" content={dadId || '-'} />
+              </Grid>
+              <Grid item xs={2}>
+                <DataCell header="Hodowla" content={breeding.name} />
               </Grid>
             </Grid>
           )

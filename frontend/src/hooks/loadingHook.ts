@@ -11,7 +11,7 @@ export const useLoadingState = (loadingProps?: boolean, timeout?: number) => {
       }, timeout ?? 400)
       return () => clearTimeout(timer)
     }
-  }, [loadingProps])
+  }, [loadingProps, timeout])
 
   return isLoading
 }
