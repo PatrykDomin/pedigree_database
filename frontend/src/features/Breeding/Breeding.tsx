@@ -1,22 +1,24 @@
-import React, { useCallback, useEffect, useState } from 'react'
-// import useStyles from './Breeding.style'
-import ListWrapper from '../../shared/ListWrapper'
-import { Button } from '@material-ui/core'
-import { getAllBreedings } from './Breeding.utils'
-import { IBreeding } from '../../core/apiTypes/apiType'
+import React, { useEffect } from 'react'
+import useStyles from './Breeding.style'
+import { ListWrapper } from '../../shared/ListWrapper'
+import { Button, Fade, Grid } from '@material-ui/core'
+import { SingleBreeding } from './SingleBreeding'
+import { useStore } from '../../core/store/store'
+import { isEmpty } from 'ramda'
 
 export const Breeding: React.FC = () => {
-  // const styles = useStyles()
-  const [breedings, setBreedings] = useState<IBreeding[]>([])
+  const styles = useStyles()
 
-  const getBreedings = useCallback(async () => {
-    const breedings = await getAllBreedings()
-    setBreedings(breedings)
-  }, [])
+  const breedings = useStore(state => state.breedings)
+  const setBreedings = useStore(state => state.fetchBreedings)
 
   useEffect(() => {
-    getBreedings()
-  }, [getBreedings])
+    if (isEmpty(breedings)) {
+      setBreedings()
+    }
+  }, [])
+
+  console.log(breedings, new Date().getSeconds())
 
   return (
     <ListWrapper
@@ -27,18 +29,17 @@ export const Breeding: React.FC = () => {
         </Button>
       }
     >
-      {breedings.map(el => {
-        return (
-          <div>
-            {el.name} {el.breeder}
-            <ul>
-              {el.dogs?.map(dog => {
-                return <li>{dog.name}</li>
-              })}
-            </ul>
-          </div>
-        )
-      })}
+      <Fade in={!isEmpty(breedings)} {...{ timeout: 800 }}>
+        <Grid container spacing={6} className={styles.wrapper}>
+          {breedings.map(el => {
+            return (
+              <Grid key={el.id} item xs={12} md={6} lg={4}>
+                <SingleBreeding name={el.name} breeder={el.breeder} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Fade>
     </ListWrapper>
   )
 }

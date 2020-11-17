@@ -15,7 +15,7 @@ export interface IDogRequest {
 
 const getAllDogs = async () => {
   const dogs = await prisma.dog.findMany({
-    include: { breeding: true },
+    include: { breeding: true, mom: true, dad: true },
   })
   return dogs
 }

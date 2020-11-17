@@ -1,1 +1,1 @@
-export { Breeding as default } from './Breeding'
+export { Breeding } from './Breeding'

@@ -1,1 +1,1 @@
-export { Dogs as default } from './Dogs'
+export { Dogs } from './Dogs'

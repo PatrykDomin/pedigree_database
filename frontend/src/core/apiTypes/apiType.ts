@@ -5,8 +5,8 @@ export interface IDog {
   litter: string
   name: string
   pedigreeName: string
-  momId?: string
-  dadId?: string
+  mom?: IDog
+  dad?: IDog
   breedingId: number
   breeding: IBreeding
 }

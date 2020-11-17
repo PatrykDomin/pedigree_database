@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import Dogs from '../../features/Dogs'
-import Information from '../../features/Information'
-import Breeding from '../../features/Breeding'
+import { Dogs } from '../../features/Dogs'
+import { Information } from '../../features/Information'
+import { Breeding } from '../../features/Breeding'
 
 export const Router = () => {
   return (

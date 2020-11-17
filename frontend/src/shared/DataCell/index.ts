@@ -1,1 +1,1 @@
-export { DataCell as default } from './DataCell'
+export { DataCell } from './DataCell'

@@ -4,11 +4,10 @@ export default makeStyles((theme: Theme) => ({
   cell: {
     color: theme.palette.text.primary,
     border: 'none',
-    margin: theme.spacing(2, 4, 2, 2),
   },
   header: {
     fontSize: 12,
-    opacity: 0.75,
+    opacity: 0.85,
   },
   content: {
     fontSize: 20,
