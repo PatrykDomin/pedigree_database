@@ -26,7 +26,47 @@ export const theme = createMuiTheme({
     },
     MuiButton: {
       root: {
-        minWidth: '42px',
+        minWidth: 44,
+        height: 40,
+      },
+    },
+    MuiDialogActions: {
+      spacing: {
+        '& > :not(:first-child)': {
+          marginLeft: 0,
+        },
+      },
+    },
+    MuiInput: {
+      root: {
+        color: 'white',
+      },
+      underline: {
+        '&:hover:not($disabled):after': {
+          // hover + focus
+        },
+        '&:hover:not($disabled):before': {
+          // hover
+          borderBottom: `2.7px solid #b29c5b`,
+        },
+        '&:after': {
+          // focus
+          borderBottom: `2.7px solid ${primaryColor}`,
+        },
+        '&:before': {
+          // no action
+          borderBottom: '2.7px solid white',
+        },
+      },
+    },
+    MuiSvgIcon: {
+      root: {
+        color: 'white',
+      },
+    },
+    MuiSelect: {
+      icon: {
+        color: 'white',
       },
     },
   },

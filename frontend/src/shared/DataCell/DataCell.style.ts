@@ -2,6 +2,7 @@ import { makeStyles, Theme } from '@material-ui/core'
 
 export default makeStyles((theme: Theme) => ({
   cell: {
+    maxWidth: '100%',
     color: theme.palette.text.primary,
     border: 'none',
   },

@@ -14,4 +14,12 @@ export default makeStyles((theme: Theme) => ({
   row: {
     minWidth: ROW_MIN_WIDTH,
   },
+  pagination: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: theme.spacing(4, 0, 0),
+    '& svg': {
+      color: theme.palette.secondary.main,
+    },
+  },
 }))

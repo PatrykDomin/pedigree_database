@@ -4,6 +4,7 @@ const prisma = new PrismaClient()
 
 export interface IDogRequest {
   pkr: string
+  birth: Date
   sex: boolean
   name: string
   pedigreeName: string
@@ -23,6 +24,7 @@ const getAllDogs = async () => {
 const addDog = async (dogData: IDogRequest) => {
   const {
     pkr,
+    birth,
     sex,
     name,
     pedigreeName,
@@ -34,6 +36,7 @@ const addDog = async (dogData: IDogRequest) => {
   await prisma.dog.create({
     data: {
       pkr,
+      birth: new Date(birth),
       sex,
       name,
       pedigreeName,

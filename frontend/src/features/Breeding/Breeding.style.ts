@@ -3,7 +3,7 @@ import { makeStyles, Theme } from '@material-ui/core'
 export default makeStyles((theme: Theme) => ({
   wrapper: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

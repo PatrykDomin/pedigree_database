@@ -1,6 +1,7 @@
 export interface IDog {
   id: number
   pkr: string
+  birth: string
   sex: boolean
   litter: string
   name: string

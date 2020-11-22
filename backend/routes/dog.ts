@@ -14,8 +14,8 @@ dogRouter.get('/dog', async (req, res) => {
 
 dogRouter.post('/dog', async (req, res) => {
   const { body }: { body: IDogRequest } = req
-  const { pkr, name, pedigreeName, litter, breedingName } = body
-  if (pkr && name && pedigreeName && litter && breedingName) {
+  const { pkr, birth, name, pedigreeName, litter, breedingName } = body
+  if (pkr && name && birth && pedigreeName && litter && breedingName) {
     await addDog(body)
     res.status(200).json({ message: 'Dodano psa' })
   } else {

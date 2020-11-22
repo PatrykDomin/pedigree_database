@@ -1,0 +1,86 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Dog",
+      "field": "birth",
+      "type": "DateTime",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Dog",
+      "field": "momChildren",
+      "type": "Dog",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Dog",
+          "field": "momChildren"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Dog",
+          "field": "momChildren"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"mom\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Dog",
+      "field": "dadChildren",
+      "type": "Dog",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Dog",
+          "field": "dadChildren"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Dog",
+          "field": "dadChildren"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"dad\""
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Dog",
+      "field": "momDog"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Dog",
+      "field": "dadDog"
+    }
+  ]
+}
