@@ -9,17 +9,18 @@ import { AddDogForm } from './AddDogForm'
 import { format, parseISO } from 'date-fns'
 import Pagination from '@material-ui/lab/Pagination/Pagination'
 import { IDog } from '../../core/apiTypes/apiType'
+import { Link } from 'react-router-dom'
 
-const DOGS_PER_PAGE = 2
+const DOGS_PER_PAGE = 10
 
 export const Dogs: React.FC = () => {
   const styles = useStyles()
 
-  const [openModal, setOpenModal] = useState(false)
-  const closeModal = () => setOpenModal(false)
-
   const dogs = useStore(state => state.dogs)
   const getDogs = useStore(state => state.fetchDogs)
+
+  const [openModal, setOpenModal] = useState(false)
+  const closeModal = () => setOpenModal(false)
 
   const [startingIndex, setStartingIndex] = useState(0)
   const [dogsToDisplay, setDogsToDisplay] = useState<IDog[]>([])
@@ -28,7 +29,7 @@ export const Dogs: React.FC = () => {
     if (isEmpty(dogs)) {
       getDogs()
     }
-  }, [getDogs, dogs, startingIndex, setDogsToDisplay])
+  }, [getDogs, dogs])
 
   useEffect(() => {
     setDogsToDisplay(
@@ -81,8 +82,11 @@ export const Dogs: React.FC = () => {
                   <Grid item xs={2}>
                     <DataCell header="Ojciec" content={dad?.name || '—'} />
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <DataCell header="Hodowla" content={breeding.name} />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Link to={`/psy/${pkr}`}>Pokaż</Link>
                   </Grid>
                 </Grid>
               )
@@ -90,15 +94,17 @@ export const Dogs: React.FC = () => {
           </div>
         </Fade>
       </Grid>
-      <Pagination
-        className={styles.pagination}
-        color="secondary"
-        count={Math.ceil(dogs.length / DOGS_PER_PAGE)}
-        page={startingIndex + 1}
-        onChange={(e, page) => {
-          setStartingIndex(page - 1)
-        }}
-      />
+      {Math.ceil(dogs.length / DOGS_PER_PAGE) > 1 && (
+        <Pagination
+          className={styles.pagination}
+          color="secondary"
+          count={Math.ceil(dogs.length / DOGS_PER_PAGE)}
+          page={startingIndex + 1}
+          onChange={(e, page) => {
+            setStartingIndex(page - 1)
+          }}
+        />
+      )}
       <AddDogForm open={openModal} close={closeModal} />
     </ListWrapper>
   )

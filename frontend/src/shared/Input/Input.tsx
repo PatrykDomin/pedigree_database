@@ -10,12 +10,8 @@ import {
 
 export const TextField = withStyles((theme: Theme) => ({
   root: {
-    color: theme.palette.common.white,
     width: '100%',
     height: 60,
-    '& input': {
-      color: theme.palette.common.white,
-    },
   },
 }))(withTheme(TextFieldMaterialUI))
 
@@ -39,7 +35,7 @@ export const CustomTextField = React.forwardRef(
     return (
       <div className={styles.wrapper}>
         <label className={styles.label}>{props.placeholder}</label>
-        <TextField inputRef={ref} {...props} />
+        <TextField inputRef={ref} {...props} style={{ color: 'white' }} />
       </div>
     )
   }

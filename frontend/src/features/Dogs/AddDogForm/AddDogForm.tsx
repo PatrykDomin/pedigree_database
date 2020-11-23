@@ -7,7 +7,6 @@ import { isEmpty } from 'ramda'
 import { CustomTextField } from '../../../shared/Input/Input'
 import { CustomModal } from '../../../shared/Modal'
 import { CustomSelect } from '../../../shared/Select/Select'
-// import { CustomAutocomplete } from '../../../shared/Calendar/Calendar'
 import { format, parseJSON } from 'date-fns'
 
 type FormInputs = {
@@ -40,7 +39,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
   const getDogs = useStore(state => state.fetchDogs)
   const getBreedings = useStore(state => state.fetchBreedings)
 
-  const { handleSubmit, control, errors, formState } = useForm<FormInputs>({
+  const { handleSubmit, control, errors } = useForm<FormInputs>({
     mode: 'onChange',
   })
 
@@ -61,6 +60,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
         body: JSON.stringify({ ...values, sex: Boolean(values.sex) }),
       })
       await getDogs()
+      close()
     } catch (err) {
       console.log('err: ', err)
     }
@@ -219,16 +219,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
           <Button color="primary" variant="outlined" onClick={close}>
             Zamknij
           </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            type="submit"
-            onClick={() => {
-              if (formState.isSubmitSuccessful) {
-                setTimeout(() => close(), 400)
-              }
-            }}
-          >
+          <Button color="primary" variant="contained" type="submit">
             Dodaj psa
           </Button>
         </div>

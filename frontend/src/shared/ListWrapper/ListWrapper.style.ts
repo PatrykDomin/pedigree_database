@@ -17,6 +17,7 @@ export default makeStyles((theme: Theme) => ({
     letterSpacing: 0.8,
   },
   filtersAndBtn: {
+    height: 60,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
