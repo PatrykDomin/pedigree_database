@@ -1,17 +1,17 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export interface IDogRequest {
-  pkr: string
-  birth: Date
-  sex: boolean
-  name: string
-  pedigreeName: string
-  litter: string
-  breedingName: string
-  momPkr?: string
-  dadPkr?: string
+  pkr: string;
+  birth: Date;
+  sex: boolean;
+  name: string;
+  pedigreeName: string;
+  litter: string;
+  breedingName: string;
+  momPkr?: string;
+  dadPkr?: string;
 }
 
 const getAllDogs = async () => {
@@ -21,9 +21,29 @@ const getAllDogs = async () => {
       mom: true,
       dad: true,
     },
-  })
-  return dogs
-}
+  });
+  return dogs;
+};
+
+const getDogWithChildren = async (pkr: string) => {
+  const dog = await prisma.dog.findOne({
+    where: {
+      pkr,
+    },
+    include: {
+      breeding: true,
+      mom: true,
+      dad: true,
+      momChildren: {
+        include: { breeding: true, mom: true, dad: true },
+      },
+      dadChildren: {
+        include: { breeding: true, mom: true, dad: true },
+      },
+    },
+  });
+  return dog;
+};
 
 const addDog = async (dogData: IDogRequest) => {
   const {
@@ -36,7 +56,7 @@ const addDog = async (dogData: IDogRequest) => {
     breedingName,
     momPkr,
     dadPkr,
-  } = dogData
+  } = dogData;
   await prisma.dog.create({
     data: {
       pkr,
@@ -49,7 +69,7 @@ const addDog = async (dogData: IDogRequest) => {
       mom: momPkr ? { connect: { pkr: momPkr } } : undefined,
       dad: dadPkr ? { connect: { pkr: dadPkr } } : undefined,
     },
-  })
-}
+  });
+};
 
-export { getAllDogs, addDog }
+export { getAllDogs, getDogWithChildren, addDog };

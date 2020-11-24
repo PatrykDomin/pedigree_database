@@ -10,7 +10,4 @@ export default makeStyles((theme: Theme) => ({
     fontSize: 12,
     opacity: 0.85,
   },
-  content: {
-    fontSize: 20,
-  },
 }));

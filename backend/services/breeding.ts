@@ -1,15 +1,15 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const getBreedings = async () => {
   const breedings = await prisma.breeding.findMany({
     include: {
       dogs: true,
     },
-  })
-  return breedings
-}
+  });
+  return breedings;
+};
 
 const getBreedingByName = async (name: string) => {
   const breedings = await prisma.breeding.findMany({
@@ -19,9 +19,9 @@ const getBreedingByName = async (name: string) => {
     where: {
       name,
     },
-  })
-  return breedings
-}
+  });
+  return breedings;
+};
 
 const addNewBreeding = async (breeder: string, name: string) => {
   await prisma.breeding.create({
@@ -29,7 +29,7 @@ const addNewBreeding = async (breeder: string, name: string) => {
       breeder,
       name,
     },
-  })
-}
+  });
+};
 
-export { getBreedings, getBreedingByName, addNewBreeding }
+export { getBreedings, getBreedingByName, addNewBreeding };

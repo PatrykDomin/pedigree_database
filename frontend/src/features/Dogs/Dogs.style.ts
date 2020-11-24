@@ -1,6 +1,6 @@
 import { makeStyles, Theme } from '@material-ui/core';
 
-const ROW_MIN_WIDTH = 916;
+const ROW_MIN_WIDTH = 1100;
 
 export default makeStyles((theme: Theme) => ({
   table: {
@@ -13,6 +13,24 @@ export default makeStyles((theme: Theme) => ({
   },
   row: {
     minWidth: ROW_MIN_WIDTH,
+  },
+  treeBtn: {
+    alignSelf: 'center',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& svg': {
+      height: '68%',
+      width: 'auto',
+      fill: theme.palette.secondary.main,
+      transition: 'fill 0.2s ease-in-out',
+    },
+    '&:hover': {
+      '& svg': {
+        fill: theme.palette.secondary.dark,
+      },
+    },
   },
   pagination: {
     display: 'flex',

@@ -5,6 +5,7 @@ import { useTheme, Theme } from '@material-ui/core';
 interface DataCellProps {
   header: string;
   content: string;
+  smallContent?: boolean;
   color?: string;
   customMargin?: string | number;
 }
@@ -12,6 +13,7 @@ interface DataCellProps {
 export const DataCell: React.FC<DataCellProps> = ({
   header,
   content,
+  smallContent,
   color,
   customMargin,
 }) => {
@@ -23,11 +25,11 @@ export const DataCell: React.FC<DataCellProps> = ({
       className={styles.cell}
       style={{
         color: color ?? 'inherit',
-        margin: customMargin ? 0 : theme.spacing(2, 4, 2, 2),
+        margin: customMargin ? 0 : theme.spacing(1),
       }}
     >
       <h3 className={styles.header}>{header}</h3>
-      <p className={styles.content}>{content}</p>
+      <p style={{ fontSize: smallContent ? 17 : 18 }}>{content}</p>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import { format, parseISO } from 'date-fns';
 import Pagination from '@material-ui/lab/Pagination/Pagination';
 import { IDog } from '../../core/apiTypes/apiType';
 import { Link } from 'react-router-dom';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 const DOGS_PER_PAGE = 10;
 
@@ -67,26 +68,35 @@ export const Dogs: React.FC = () => {
                   <Grid item xs={2}>
                     <DataCell header="Nr PKR" content={pkr} />
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={1}>
                     <DataCell
-                      header="Data narodzin"
+                      header="Narodziny"
                       content={format(parseISO(birth), 'dd.MM.yyyy')}
+                      smallContent
                     />
                   </Grid>
                   <Grid item xs={2}>
                     <DataCell header="Imię" content={name} />
                   </Grid>
                   <Grid item xs={2}>
-                    <DataCell header="Matka" content={mom?.name || '—'} />
+                    <DataCell
+                      header="Matka"
+                      content={mom?.name ?? 'Nie podano'}
+                    />
                   </Grid>
                   <Grid item xs={2}>
-                    <DataCell header="Ojciec" content={dad?.name || '—'} />
+                    <DataCell
+                      header="Ojciec"
+                      content={dad?.name ?? 'Nie podano'}
+                    />
                   </Grid>
-                  <Grid item xs={1}>
+                  <Grid item xs={2}>
                     <DataCell header="Hodowla" content={breeding.name} />
                   </Grid>
                   <Grid item xs={1}>
-                    <Link to={`/psy/${pkr}`}>Pokaż</Link>
+                    <Link to={`/psy/${pkr}`} className={styles.treeBtn}>
+                      <AccountTreeIcon />
+                    </Link>
                   </Grid>
                 </Grid>
               );
