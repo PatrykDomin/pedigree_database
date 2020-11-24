@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
 export default makeStyles((theme: Theme) => ({
   cell: {
@@ -13,4 +13,4 @@ export default makeStyles((theme: Theme) => ({
   content: {
     fontSize: 20,
   },
-}))
+}));

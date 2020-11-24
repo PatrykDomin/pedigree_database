@@ -1,1 +1,1 @@
-export { SingleBreeding } from './SingleBreedings'
+export { SingleBreeding } from './SingleBreedings';

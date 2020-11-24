@@ -1,5 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles'
-import { primaryColor, secondaryColor, textPrimaryColor } from './constants'
+import { createMuiTheme } from '@material-ui/core/styles';
+import { primaryColor, secondaryColor, textPrimaryColor } from './constants';
 
 export const theme = createMuiTheme({
   spacing: 4,
@@ -92,6 +92,6 @@ export const theme = createMuiTheme({
       primary: textPrimaryColor,
     },
   },
-})
+});
 
-export default theme
+export default theme;

@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
 export default makeStyles((theme: Theme) => ({
   appWrapper: {
@@ -9,4 +9,4 @@ export default makeStyles((theme: Theme) => ({
   children: {
     padding: theme.spacing(9),
   },
-}))
+}));

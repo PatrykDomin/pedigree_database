@@ -1,1 +1,1 @@
-export { AddBreedingForm } from './AddBreedingForm'
+export { AddBreedingForm } from './AddBreedingForm';

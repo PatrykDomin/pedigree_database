@@ -1,10 +1,10 @@
-import React from 'react'
-import useStyles from './Information.style'
-import Nela from '../../images/Nela.jpg'
-import Dogs from '../../images/dogs_older_s.jpg'
+import React from 'react';
+import useStyles from './Information.style';
+import Nela from '../../images/Nela.jpg';
+import Dogs from '../../images/dogs_older_s.jpg';
 
 export const Information: React.FC = () => {
-  const styles = useStyles()
+  const styles = useStyles();
 
   return (
     <div className={styles.information}>
@@ -59,5 +59,5 @@ export const Information: React.FC = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};

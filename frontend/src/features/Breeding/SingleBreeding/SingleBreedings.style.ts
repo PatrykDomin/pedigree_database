@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
-const IMG_SIZE = 108
+const IMG_SIZE = 108;
 
 export default makeStyles((theme: Theme) => ({
   card: {
@@ -34,4 +34,4 @@ export default makeStyles((theme: Theme) => ({
     height: 40,
     width: '100%',
   },
-}))
+}));

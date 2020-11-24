@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import useStyles from './Dogs.style'
-import { ListWrapper } from '../../shared/ListWrapper'
-import { Button, Fade, Grid } from '@material-ui/core'
-import { DataCell } from '../../shared/DataCell'
-import { isEmpty } from 'ramda'
-import { useStore } from '../../core/store/store'
-import { AddDogForm } from './AddDogForm'
-import { format, parseISO } from 'date-fns'
-import Pagination from '@material-ui/lab/Pagination/Pagination'
-import { IDog } from '../../core/apiTypes/apiType'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import useStyles from './Dogs.style';
+import { ListWrapper } from '../../shared/ListWrapper';
+import { Button, Fade, Grid } from '@material-ui/core';
+import { DataCell } from '../../shared/DataCell';
+import { isEmpty } from 'ramda';
+import { useStore } from '../../core/store/store';
+import { AddDogForm } from './AddDogForm';
+import { format, parseISO } from 'date-fns';
+import Pagination from '@material-ui/lab/Pagination/Pagination';
+import { IDog } from '../../core/apiTypes/apiType';
+import { Link } from 'react-router-dom';
 
-const DOGS_PER_PAGE = 10
+const DOGS_PER_PAGE = 10;
 
 export const Dogs: React.FC = () => {
-  const styles = useStyles()
+  const styles = useStyles();
 
-  const dogs = useStore(state => state.dogs)
-  const getDogs = useStore(state => state.fetchDogs)
+  const dogs = useStore(state => state.dogs);
+  const getDogs = useStore(state => state.fetchDogs);
 
-  const [openModal, setOpenModal] = useState(false)
-  const closeModal = () => setOpenModal(false)
+  const [openModal, setOpenModal] = useState(false);
+  const closeModal = () => setOpenModal(false);
 
-  const [startingIndex, setStartingIndex] = useState(0)
-  const [dogsToDisplay, setDogsToDisplay] = useState<IDog[]>([])
+  const [startingIndex, setStartingIndex] = useState(0);
+  const [dogsToDisplay, setDogsToDisplay] = useState<IDog[]>([]);
 
   useEffect(() => {
     if (isEmpty(dogs)) {
-      getDogs()
+      getDogs();
     }
-  }, [getDogs, dogs])
+  }, [getDogs, dogs]);
 
   useEffect(() => {
     setDogsToDisplay(
@@ -37,8 +37,8 @@ export const Dogs: React.FC = () => {
         startingIndex * DOGS_PER_PAGE,
         startingIndex * DOGS_PER_PAGE + DOGS_PER_PAGE
       )
-    )
-  }, [startingIndex, dogs, setDogsToDisplay])
+    );
+  }, [startingIndex, dogs, setDogsToDisplay]);
 
   return (
     <ListWrapper
@@ -89,7 +89,7 @@ export const Dogs: React.FC = () => {
                     <Link to={`/psy/${pkr}`}>Pokaż</Link>
                   </Grid>
                 </Grid>
-              )
+              );
             })}
           </div>
         </Fade>
@@ -101,11 +101,11 @@ export const Dogs: React.FC = () => {
           count={Math.ceil(dogs.length / DOGS_PER_PAGE)}
           page={startingIndex + 1}
           onChange={(e, page) => {
-            setStartingIndex(page - 1)
+            setStartingIndex(page - 1);
           }}
         />
       )}
       <AddDogForm open={openModal} close={closeModal} />
     </ListWrapper>
-  )
-}
+  );
+};

@@ -1,1 +1,1 @@
-export { DataCard } from './DataCard'
+export { DataCard } from './DataCard';

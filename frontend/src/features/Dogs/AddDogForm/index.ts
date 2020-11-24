@@ -1,1 +1,1 @@
-export { AddDogForm } from './AddDogForm'
+export { AddDogForm } from './AddDogForm';

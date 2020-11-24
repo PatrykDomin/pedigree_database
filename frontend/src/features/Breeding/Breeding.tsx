@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import useStyles from './Breeding.style'
-import { ListWrapper } from '../../shared/ListWrapper'
-import { Button, Fade, Grid } from '@material-ui/core'
-import { SingleBreeding } from './SingleBreeding'
-import { useStore } from '../../core/store/store'
-import { isEmpty } from 'ramda'
-import { AddBreedingForm } from './AddBreedingForm'
-import { TextField } from '../../shared/Input/Input'
+import React, { useEffect, useState } from 'react';
+import useStyles from './Breeding.style';
+import { ListWrapper } from '../../shared/ListWrapper';
+import { Button, Fade, Grid } from '@material-ui/core';
+import { SingleBreeding } from './SingleBreeding';
+import { useStore } from '../../core/store/store';
+import { isEmpty } from 'ramda';
+import { AddBreedingForm } from './AddBreedingForm';
+import { TextField } from '../../shared/Input/Input';
 
 export const Breeding: React.FC = () => {
-  const styles = useStyles()
+  const styles = useStyles();
 
-  const breedings = useStore(state => state.breedings)
-  const getBreedings = useStore(state => state.fetchBreedings)
+  const breedings = useStore(state => state.breedings);
+  const getBreedings = useStore(state => state.fetchBreedings);
 
-  const [openModal, setOpenModal] = useState(false)
-  const closeModal = () => setOpenModal(false)
+  const [openModal, setOpenModal] = useState(false);
+  const closeModal = () => setOpenModal(false);
 
-  const [nameFilter, setNameFilter] = useState('')
-  const [breedingsToDisplay, setBreedingsToDisplay] = useState(breedings)
+  const [nameFilter, setNameFilter] = useState('');
+  const [breedingsToDisplay, setBreedingsToDisplay] = useState(breedings);
 
   useEffect(() => {
     if (isEmpty(breedings)) {
-      getBreedings()
+      getBreedings();
     }
-  }, [getBreedings, breedings])
+  }, [getBreedings, breedings]);
 
   useEffect(() => {
     if (!isEmpty(breedings)) {
@@ -32,9 +32,9 @@ export const Breeding: React.FC = () => {
         breedings.filter(br =>
           br.name.toLowerCase().includes(nameFilter.toLowerCase())
         )
-      )
+      );
     }
-  }, [nameFilter, setBreedingsToDisplay, breedings])
+  }, [nameFilter, setBreedingsToDisplay, breedings]);
 
   return (
     <ListWrapper
@@ -46,7 +46,7 @@ export const Breeding: React.FC = () => {
           label="Nazwa hodowli"
           value={nameFilter}
           onChange={e => {
-            setNameFilter(e.target.value)
+            setNameFilter(e.target.value);
           }}
         />
       }
@@ -72,11 +72,11 @@ export const Breeding: React.FC = () => {
               <Grid key={el.id} item xs={12} md={6} lg={4}>
                 <SingleBreeding name={el.name} breeder={el.breeder} />
               </Grid>
-            )
+            );
           })}
         </Grid>
       </Fade>
       <AddBreedingForm open={openModal} close={closeModal} />
     </ListWrapper>
-  )
-}
+  );
+};

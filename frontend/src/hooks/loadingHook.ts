@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export const useLoadingState = (loadingProps?: boolean, timeout?: number) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (!loadingProps) {
       const timer = setTimeout(() => {
-        setIsLoading(false)
-      }, timeout ?? 400)
-      return () => clearTimeout(timer)
+        setIsLoading(false);
+      }, timeout ?? 400);
+      return () => clearTimeout(timer);
     }
-  }, [loadingProps, timeout])
+  }, [loadingProps, timeout]);
 
-  return isLoading
-}
+  return isLoading;
+};

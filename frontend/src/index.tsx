@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
-import { CssBaseline, ThemeProvider } from '@material-ui/core'
-import theme from './styles/theme'
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import theme from './styles/theme';
+import { BrowserRouter } from 'react-router-dom';
 
 const MainComponent: React.FC = () => (
   <ThemeProvider theme={theme}>
@@ -12,6 +12,6 @@ const MainComponent: React.FC = () => (
       <App />
     </BrowserRouter>
   </ThemeProvider>
-)
+);
 
-ReactDOM.render(<MainComponent />, document.getElementById('root'))
+ReactDOM.render(<MainComponent />, document.getElementById('root'));

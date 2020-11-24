@@ -1,1 +1,1 @@
-export { AppWrapper } from './AppWrapper'
+export { AppWrapper } from './AppWrapper';

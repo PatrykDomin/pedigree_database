@@ -1,7 +1,7 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
-const LIST_WRAPPER_MAX_WIDTH = 1200
-const CHILDREN_MIN_HEIGHT = 200
+const LIST_WRAPPER_MAX_WIDTH = 1200;
+const CHILDREN_MIN_HEIGHT = 200;
 
 export default makeStyles((theme: Theme) => ({
   listWrapper: {
@@ -28,4 +28,4 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
     minHeight: CHILDREN_MIN_HEIGHT,
   },
-}))
+}));

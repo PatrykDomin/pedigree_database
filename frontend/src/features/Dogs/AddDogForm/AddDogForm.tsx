@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react'
-import useStyles from './AddDogForm.style'
-import { useForm, Controller } from 'react-hook-form'
-import { useStore } from '../../../core/store/store'
-import { Button } from '@material-ui/core'
-import { isEmpty } from 'ramda'
-import { CustomTextField } from '../../../shared/Input/Input'
-import { CustomModal } from '../../../shared/Modal'
-import { CustomSelect } from '../../../shared/Select/Select'
-import { format, parseJSON } from 'date-fns'
+import React, { useEffect } from 'react';
+import useStyles from './AddDogForm.style';
+import { useForm, Controller } from 'react-hook-form';
+import { useStore } from '../../../core/store/store';
+import { Button } from '@material-ui/core';
+import { isEmpty } from 'ramda';
+import { CustomTextField } from '../../../shared/Input/Input';
+import { CustomModal } from '../../../shared/Modal';
+import { CustomSelect } from '../../../shared/Select/Select';
+import { format, parseJSON } from 'date-fns';
 
 type FormInputs = {
-  pkr: string
-  sex: boolean
-  birth: Date
-  name: string
-  pedigreeName: string
-  litter: string
-  breedingName: string
-  momPkr?: string
-  dadPkr?: string
-}
+  pkr: string;
+  sex: boolean;
+  birth: Date;
+  name: string;
+  pedigreeName: string;
+  litter: string;
+  breedingName: string;
+  momPkr?: string;
+  dadPkr?: string;
+};
 
 enum sex {
   bitch,
@@ -27,27 +27,27 @@ enum sex {
 }
 
 interface IAddDogForm {
-  open: boolean
-  close: () => void
+  open: boolean;
+  close: () => void;
 }
 
 export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
-  const styles = useStyles()
+  const styles = useStyles();
 
-  const dogs = useStore(state => state.dogs)
-  const breedings = useStore(state => state.breedings)
-  const getDogs = useStore(state => state.fetchDogs)
-  const getBreedings = useStore(state => state.fetchBreedings)
+  const dogs = useStore(state => state.dogs);
+  const breedings = useStore(state => state.breedings);
+  const getDogs = useStore(state => state.fetchDogs);
+  const getBreedings = useStore(state => state.fetchBreedings);
 
   const { handleSubmit, control, errors } = useForm<FormInputs>({
     mode: 'onChange',
-  })
+  });
 
   useEffect(() => {
     if (isEmpty(breedings)) {
-      getBreedings()
+      getBreedings();
     }
-  }, [getBreedings, breedings])
+  }, [getBreedings, breedings]);
 
   const onSubmit = async (values: FormInputs) => {
     try {
@@ -58,13 +58,13 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ ...values, sex: Boolean(values.sex) }),
-      })
-      await getDogs()
-      close()
+      });
+      await getDogs();
+      close();
     } catch (err) {
-      console.log('err: ', err)
+      console.log('err: ', err);
     }
-  }
+  };
 
   return (
     <CustomModal title="Dodaj psa" open={open} close={close}>
@@ -166,7 +166,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               options={dogs
                 .filter(dog => !dog.sex)
                 .map(dog => {
-                  return { name: dog.name, val: dog.pkr }
+                  return { name: dog.name, val: dog.pkr };
                 })}
               displayEmpty
             />
@@ -182,7 +182,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               options={dogs
                 .filter(dog => dog.sex)
                 .map(dog => {
-                  return { name: dog.name, val: dog.pkr }
+                  return { name: dog.name, val: dog.pkr };
                 })}
               displayEmpty
             />
@@ -198,7 +198,7 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
                 <CustomSelect
                   label="Hodowla"
                   options={breedings.map(br => {
-                    return { name: br.name, val: br.name }
+                    return { name: br.name, val: br.name };
                   })}
                 />
               }
@@ -225,5 +225,5 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
         </div>
       </form>
     </CustomModal>
-  )
-}
+  );
+};

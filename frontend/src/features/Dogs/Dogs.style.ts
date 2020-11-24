@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
-const ROW_MIN_WIDTH = 916
+const ROW_MIN_WIDTH = 916;
 
 export default makeStyles((theme: Theme) => ({
   table: {
@@ -22,4 +22,4 @@ export default makeStyles((theme: Theme) => ({
       color: theme.palette.secondary.main,
     },
   },
-}))
+}));

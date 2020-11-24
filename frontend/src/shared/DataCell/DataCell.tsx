@@ -1,12 +1,12 @@
-import React from 'react'
-import useStyles from './DataCell.style'
-import { useTheme, Theme } from '@material-ui/core'
+import React from 'react';
+import useStyles from './DataCell.style';
+import { useTheme, Theme } from '@material-ui/core';
 
 interface DataCellProps {
-  header: string
-  content: string
-  color?: string
-  customMargin?: string | number
+  header: string;
+  content: string;
+  color?: string;
+  customMargin?: string | number;
 }
 
 export const DataCell: React.FC<DataCellProps> = ({
@@ -15,8 +15,8 @@ export const DataCell: React.FC<DataCellProps> = ({
   color,
   customMargin,
 }) => {
-  const styles = useStyles()
-  const theme = useTheme<Theme>()
+  const styles = useStyles();
+  const theme = useTheme<Theme>();
 
   return (
     <div
@@ -29,5 +29,5 @@ export const DataCell: React.FC<DataCellProps> = ({
       <h3 className={styles.header}>{header}</h3>
       <p className={styles.content}>{content}</p>
     </div>
-  )
-}
+  );
+};

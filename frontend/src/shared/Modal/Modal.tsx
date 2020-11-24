@@ -1,18 +1,18 @@
-import React from 'react'
+import React from 'react';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-} from '@material-ui/core'
-import useStyles from './Modal.style'
+} from '@material-ui/core';
+import useStyles from './Modal.style';
 
 interface CustomModalProps {
-  open: boolean
-  close: () => void
-  title: string
-  confirmButton?: JSX.Element
-  closeButton?: JSX.Element
+  open: boolean;
+  close: () => void;
+  title: string;
+  confirmButton?: JSX.Element;
+  closeButton?: JSX.Element;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
@@ -23,7 +23,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   closeButton,
   children,
 }) => {
-  const styles = useStyles()
+  const styles = useStyles();
 
   return (
     <Dialog
@@ -46,5 +46,5 @@ export const CustomModal: React.FC<CustomModalProps> = ({
         </DialogActions>
       )}
     </Dialog>
-  )
-}
+  );
+};

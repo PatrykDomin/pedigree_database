@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   withStyles,
   Theme,
@@ -7,13 +7,13 @@ import {
   makeStyles,
   SelectProps,
   MenuItem,
-} from '@material-ui/core'
+} from '@material-ui/core';
 // import { Autocomplete } from '@material-ui/lab'
 // import { TextField } from '../Input/Input'
 
 export const Select = withStyles((theme: Theme) => ({
   root: {},
-}))(withTheme(SelectMaterialUI))
+}))(withTheme(SelectMaterialUI));
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
@@ -31,18 +31,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   select: {
     width: '100%',
   },
-}))
+}));
 
 type SelectOptions = {
-  label: string
-  options: { name: string; val: string | number }[]
-  displayEmpty?: boolean
-}
+  label: string;
+  options: { name: string; val: string | number }[];
+  displayEmpty?: boolean;
+};
 
 export const CustomSelect = React.forwardRef(
   (props: SelectOptions | SelectProps, ref) => {
-    const styles = useStyles()
-    const { label, options, displayEmpty } = props as SelectOptions
+    const styles = useStyles();
+    const { label, options, displayEmpty } = props as SelectOptions;
     return (
       <div className={styles.wrapper}>
         <label className={styles.label}>{label}</label>
@@ -60,9 +60,9 @@ export const CustomSelect = React.forwardRef(
           ))}
         </Select>
       </div>
-    )
+    );
   }
-)
+);
 
 // type AutocompleteOptions = {
 //   label: string

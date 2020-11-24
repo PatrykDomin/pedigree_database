@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   withStyles,
   Theme,
@@ -6,14 +6,14 @@ import {
   withTheme,
   makeStyles,
   TextFieldProps,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 export const TextField = withStyles((theme: Theme) => ({
   root: {
     width: '100%',
     height: 60,
   },
-}))(withTheme(TextFieldMaterialUI))
+}))(withTheme(TextFieldMaterialUI));
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
@@ -27,16 +27,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 200,
     minWidth: 200,
   },
-}))
+}));
 
 export const CustomTextField = React.forwardRef(
   (props: TextFieldProps, ref) => {
-    const styles = useStyles()
+    const styles = useStyles();
     return (
       <div className={styles.wrapper}>
         <label className={styles.label}>{props.placeholder}</label>
         <TextField inputRef={ref} {...props} style={{ color: 'white' }} />
       </div>
-    )
+    );
   }
-)
+);

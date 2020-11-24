@@ -1,14 +1,14 @@
-import React from 'react'
-import { Button, useTheme, Theme } from '@material-ui/core'
-import { DataCell } from '../../../shared/DataCell'
-import useStyles from './SingleBreedings.style'
+import React from 'react';
+import { Button, useTheme, Theme } from '@material-ui/core';
+import { DataCell } from '../../../shared/DataCell';
+import useStyles from './SingleBreedings.style';
 
 export const SingleBreeding: React.FC<{ name: string; breeder: string }> = ({
   name,
   breeder,
 }) => {
-  const styles = useStyles()
-  const theme = useTheme<Theme>()
+  const styles = useStyles();
+  const theme = useTheme<Theme>();
 
   return (
     <div className={styles.card}>
@@ -31,5 +31,5 @@ export const SingleBreeding: React.FC<{ name: string; breeder: string }> = ({
         Zobacz hodowlę
       </Button>
     </div>
-  )
-}
+  );
+};

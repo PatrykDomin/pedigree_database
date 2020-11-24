@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
 export default makeStyles((theme: Theme) => ({
   wrapper: {
@@ -7,4 +7,4 @@ export default makeStyles((theme: Theme) => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-}))
+}));

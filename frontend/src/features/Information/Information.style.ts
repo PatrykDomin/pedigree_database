@@ -1,4 +1,4 @@
-import { makeStyles, Theme } from '@material-ui/core'
+import { makeStyles, Theme } from '@material-ui/core';
 
 export default makeStyles((theme: Theme) => ({
   information: {
@@ -43,4 +43,4 @@ export default makeStyles((theme: Theme) => ({
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   },
-}))
+}));

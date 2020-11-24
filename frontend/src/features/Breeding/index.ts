@@ -1,1 +1,1 @@
-export { Breeding } from './Breeding'
+export { Breeding } from './Breeding';

@@ -1,10 +1,10 @@
-import React from 'react'
-import useStyles from './ListWrapper.style'
+import React from 'react';
+import useStyles from './ListWrapper.style';
 
 interface ListWrapperProps {
-  title: string
-  filter?: JSX.Element
-  additionalBtn?: JSX.Element
+  title: string;
+  filter?: JSX.Element;
+  additionalBtn?: JSX.Element;
 }
 
 export const ListWrapper: React.FC<ListWrapperProps> = ({
@@ -13,7 +13,7 @@ export const ListWrapper: React.FC<ListWrapperProps> = ({
   additionalBtn,
   children,
 }) => {
-  const styles = useStyles()
+  const styles = useStyles();
   return (
     <div className={styles.listWrapper}>
       <h1 className={styles.header}>{title}</h1>
@@ -23,5 +23,5 @@ export const ListWrapper: React.FC<ListWrapperProps> = ({
       </div>
       <div className={styles.children}>{children}</div>
     </div>
-  )
-}
+  );
+};

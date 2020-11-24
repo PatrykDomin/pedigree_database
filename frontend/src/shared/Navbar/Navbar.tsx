@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import useStyles from './Navbar.style'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useStyles from './Navbar.style';
 
 export const Navbar: React.FC = () => {
-  const styles = useStyles()
+  const styles = useStyles();
   return (
     <div className={styles.navbar}>
       <h1 className={styles.header}>Baza rodowodowa</h1>
@@ -13,5 +13,5 @@ export const Navbar: React.FC = () => {
         <Link to="/informacje">Informacje</Link>
       </div>
     </div>
-  )
-}
+  );
+};
