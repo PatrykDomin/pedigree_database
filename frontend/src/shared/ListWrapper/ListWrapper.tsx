@@ -18,7 +18,7 @@ export const ListWrapper: React.FC<ListWrapperProps> = ({
     <div className={styles.listWrapper}>
       <h1 className={styles.header}>{title}</h1>
       <div className={styles.filtersAndBtn}>
-        <div>{filter}</div>
+        <div className={styles.filters}>{filter}</div>
         <div>{additionalBtn}</div>
       </div>
       <div className={styles.children}>{children}</div>

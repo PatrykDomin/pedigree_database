@@ -4,15 +4,18 @@ const ROW_MIN_WIDTH = 1100;
 
 export default makeStyles((theme: Theme) => ({
   table: {
-    border: `2px solid ${theme.palette.primary.dark}`,
-    boxShadow: `-4px 4px 8px ${theme.palette.primary.dark}, 4px -4px 8px ${theme.palette.primary.light}`,
     borderRadius: 12,
-    padding: theme.spacing(8, 2),
+    padding: theme.spacing(0, 2),
     maxWidth: '100%',
-    overflow: 'auto',
+    overflowX: 'auto',
+
+    overflowY: 'hidden',
+    transition: 'height 0.4s ease-in-out',
   },
   row: {
     minWidth: ROW_MIN_WIDTH,
+    padding: theme.spacing(1, 0),
+    marginBottom: theme.spacing(1),
   },
   treeBtn: {
     alignSelf: 'center',

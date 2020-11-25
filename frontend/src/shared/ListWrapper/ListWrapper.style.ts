@@ -28,4 +28,9 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
     minHeight: CHILDREN_MIN_HEIGHT,
   },
+  filters: {
+    '& > div': {
+      marginRight: theme.spacing(4),
+    },
+  },
 }));

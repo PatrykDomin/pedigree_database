@@ -4,51 +4,60 @@ import { ListWrapper } from '../../shared/ListWrapper';
 import { Button, Fade, Grid } from '@material-ui/core';
 import { SingleBreeding } from './SingleBreeding';
 import { useStore } from '../../core/store/store';
-import { isEmpty } from 'ramda';
 import { AddBreedingForm } from './AddBreedingForm';
 import { TextField } from '../../shared/Input/Input';
 
 export const Breeding: React.FC = () => {
   const styles = useStyles();
 
-  const breedings = useStore(state => state.breedings);
+  const [nameFilter, setNameFilter] = useState('');
+  const [breederFilter, setBreederFilter] = useState('');
+
+  const breedingsLength = useStore(state => state.breedings.length);
+  const filteredBreedings = useStore(state =>
+    state.breedings
+      .filter(br => br.name.toLowerCase().includes(nameFilter.toLowerCase()))
+      .filter(br =>
+        br.breeder.toLowerCase().includes(breederFilter.toLowerCase())
+      )
+  );
   const getBreedings = useStore(state => state.fetchBreedings);
 
   const [openModal, setOpenModal] = useState(false);
   const closeModal = () => setOpenModal(false);
 
-  const [nameFilter, setNameFilter] = useState('');
-  const [breedingsToDisplay, setBreedingsToDisplay] = useState(breedings);
-
   useEffect(() => {
-    if (isEmpty(breedings)) {
+    if (!breedingsLength) {
       getBreedings();
     }
-  }, [getBreedings, breedings]);
-
-  useEffect(() => {
-    if (!isEmpty(breedings)) {
-      setBreedingsToDisplay(
-        breedings.filter(br =>
-          br.name.toLowerCase().includes(nameFilter.toLowerCase())
-        )
-      );
-    }
-  }, [nameFilter, setBreedingsToDisplay, breedings]);
+  }, [getBreedings, breedingsLength]);
 
   return (
     <ListWrapper
       title="Lista hodowli"
       filter={
-        <TextField
-          color="secondary"
-          variant="outlined"
-          label="Nazwa hodowli"
-          value={nameFilter}
-          onChange={e => {
-            setNameFilter(e.target.value);
-          }}
-        />
+        <>
+          <TextField
+            style={{ width: 280 }}
+            color="secondary"
+            variant="outlined"
+            label="Nazwa hodowli"
+            value={nameFilter}
+            onChange={e => {
+              setNameFilter(e.target.value);
+            }}
+          />
+          <TextField
+            style={{ width: 280 }}
+            color="secondary"
+            variant="outlined"
+            label="Hodowca"
+            value={breederFilter}
+            onChange={e => {
+              setBreederFilter(e.target.value);
+            }}
+          />
+        </>
       }
       additionalBtn={
         <Button
@@ -60,14 +69,14 @@ export const Breeding: React.FC = () => {
         </Button>
       }
     >
-      <Fade in={!isEmpty(breedingsToDisplay)} {...{ timeout: 800 }}>
+      <Fade in={Boolean(breedingsLength)} {...{ timeout: 800 }}>
         <Grid
           container
           justify="flex-end"
           spacing={6}
           className={styles.wrapper}
         >
-          {breedingsToDisplay.map(el => {
+          {filteredBreedings.map(el => {
             return (
               <Grid key={el.id} item xs={12} md={6} lg={4}>
                 <SingleBreeding name={el.name} breeder={el.breeder} />

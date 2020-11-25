@@ -8,8 +8,10 @@ export interface IDog {
   pedigreeName: string;
   momChildren?: IDog[];
   dadChildren?: IDog[];
-  mom?: IDog;
-  dad?: IDog;
+  mom?: IDog | null;
+  momId?: number | null;
+  dad?: IDog | null;
+  dadId?: number | null;
   breedingId: number;
   breeding: IBreeding;
 }
