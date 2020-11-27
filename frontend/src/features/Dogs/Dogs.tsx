@@ -139,7 +139,7 @@ export const Dogs: React.FC = () => {
         <SizeMe monitorHeight>
           {({ size }) => {
             setTimeout(() => {
-              size.height && setTableHeight(size.height);
+              size.height && setTableHeight(size.height + 12);
             }, 50);
             return (
               <div>

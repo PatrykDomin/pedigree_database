@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export interface IDogRequest {
+export interface AddDogRequest {
   pkr: string;
   birth: Date;
   sex: boolean;
@@ -10,6 +10,12 @@ export interface IDogRequest {
   pedigreeName: string;
   litter: string;
   breedingName: string;
+  momPkr?: string;
+  dadPkr?: string;
+}
+
+export interface UpdateDogRequest {
+  name: string;
   momPkr?: string;
   dadPkr?: string;
 }
@@ -45,7 +51,25 @@ const getDogWithChildren = async (pkr: string) => {
   return dog;
 };
 
-const addDog = async (dogData: IDogRequest) => {
+const updateDog = async (id: number, updateData: UpdateDogRequest) => {
+  const { name, momPkr, dadPkr } = updateData;
+  try {
+    await prisma.dog.update({
+      where: {
+        id,
+      },
+      data: {
+        name: name,
+        mom: momPkr ? { connect: { pkr: momPkr } } : undefined,
+        dad: dadPkr ? { connect: { pkr: dadPkr } } : undefined,
+      },
+    });
+  } catch (err) {
+    console.log('err', err);
+  }
+};
+
+const addDog = async (dogData: AddDogRequest) => {
   const {
     pkr,
     birth,
@@ -72,4 +96,4 @@ const addDog = async (dogData: IDogRequest) => {
   });
 };
 
-export { getAllDogs, getDogWithChildren, addDog };
+export { getAllDogs, getDogWithChildren, updateDog, addDog };

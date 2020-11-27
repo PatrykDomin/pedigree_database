@@ -5,7 +5,7 @@ const ROW_MIN_WIDTH = 1100;
 export default makeStyles((theme: Theme) => ({
   table: {
     borderRadius: 12,
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 0, 3),
     maxWidth: '100%',
     overflowX: 'auto',
 

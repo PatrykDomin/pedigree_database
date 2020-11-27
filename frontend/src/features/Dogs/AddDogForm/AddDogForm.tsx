@@ -211,7 +211,6 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
             Brak hodowli w bazie. Możesz ją dodać w zakładce "Hodowle"
           </span>
         )}
-        <br />
         <span>
           Nie widzisz swojej hodowli? Dodaj ją na zakładce "Hodowle" :)
         </span>

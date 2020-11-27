@@ -2,7 +2,9 @@ import { Router } from 'express';
 import {
   getAllDogs,
   addDog,
-  IDogRequest,
+  AddDogRequest,
+  updateDog,
+  UpdateDogRequest,
   getDogWithChildren,
 } from '../services/dog';
 import { groupBy } from 'ramda';
@@ -29,8 +31,9 @@ const groupByDad = groupBy(
 
 dogRouter.get('/dog', async (req, res) => {
   const dogs = await getAllDogs();
-  if (dogs) {
-    res.status(200).json(dogs);
+  const sortedDogs = dogs.sort((a, b) => (a.birth > b.birth ? -1 : 1));
+  if (sortedDogs) {
+    res.status(200).json(sortedDogs);
   } else {
     res.status(204).json({ message: 'No dogs' });
   }
@@ -55,8 +58,19 @@ dogRouter.get('/dog/:pkr', async (req, res) => {
   }
 });
 
+dogRouter.put('/dog/:pkr', async (req, res) => {
+  const { body }: { body: UpdateDogRequest } = req;
+  try {
+    await updateDog(req.params.pkr, body);
+    res.status(200).json({ message: 'Dog updated :)' });
+  } catch (err) {
+    console.log('err', err);
+    res.status(400).json({ message: 'Update fail' });
+  }
+});
+
 dogRouter.post('/dog', async (req, res) => {
-  const { body }: { body: IDogRequest } = req;
+  const { body }: { body: AddDogRequest } = req;
   const { pkr, birth, name, pedigreeName, litter, breedingName } = body;
   if (pkr && name && birth && pedigreeName && litter && breedingName) {
     await addDog(body);
