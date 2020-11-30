@@ -1,60 +1,40 @@
-import { Button } from '@material-ui/core';
-import { format, parseISO } from 'date-fns';
 import React, { useEffect, useState, useCallback } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { IDog } from '../../core/apiTypes/apiType';
+import { DogType, DogWithLittersType } from '../../core/apiTypes/apiType';
 import { useStore } from '../../core/store/store';
-import { CustomTextField } from '../../shared/Input/Input';
-import { CustomModal } from '../../shared/Modal';
-import { CustomSelect } from '../../shared/Select/Select';
+import { UpdateDogFrom } from './UpdateDogForm';
+import useStyles from './Dog.styles';
+import { SingleCard } from './SingleCard';
+import { DataCell } from '../../shared/DataCell';
+import {
+  Button,
+  Collapse,
+  Divider,
+  Fade,
+  Grid,
+  Theme,
+  useMediaQuery,
+  useTheme,
+} from '@material-ui/core';
+import { isEmpty } from 'ramda';
 
 export const Dog: React.FC = () => {
+  const styles = useStyles();
+  const theme = useTheme<Theme>();
+  const mediumScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   const { pkr } = useParams<{ pkr: string }>();
 
   const dogs = useStore(state => state.dogs);
   const getDogs = useStore(state => state.fetchDogs);
 
   const [shoWModal, setShowModal] = useState(false);
-  const [dogData, setDogData] = useState<{
-    dog: IDog;
-    litters: {
-      parent: string;
-      children: IDog[];
-    }[];
-  }>();
-
-  const onSubmit = async (data: {
-    momId: number;
-    dadId: number;
-    name: string;
-  }) => {
-    try {
-      await fetch(`http://localhost:4200/dog/${pkr}`, {
-        method: 'PUT',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ data }),
-      });
-      await getDogWithChildren(pkr);
-      setShowModal(false);
-    } catch (err) {
-      console.log('err: ', err);
-    } finally {
-    }
-  };
+  const [dogData, setDogData] = useState<DogWithLittersType>();
+  const [showLitters, setShowLitters] = useState<number | null>(null);
 
   const getDogWithChildren = useCallback(async (pkr: string) => {
     const response = await fetch(`http://localhost:4200/dog/${pkr}`);
-    const data: {
-      dog: IDog;
-      litters: {
-        parent: string;
-        children: IDog[];
-      }[];
-    } = await response.json();
+    const data: DogWithLittersType = await response.json();
     setDogData(data);
   }, []);
 
@@ -66,136 +46,162 @@ export const Dog: React.FC = () => {
 
   const { dog, litters } = dogData ?? {};
 
-  const { handleSubmit, control, errors } = useForm<{
-    momPkr: number;
-    dadPkr: number;
-    name: string;
-  }>({
-    mode: 'onChange',
-  });
-
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-        fontSize: 16,
-      }}
-    >
-      <div>
-        <p>{dog?.name}</p>
-        <p>{dog?.breeding.name}</p>
-        <p>{dog?.mom?.name}</p>
-        <p>{dog?.dad?.name}</p>
-      </div>
-      <br />
-      <div style={{ display: 'flex' }}>
-        {litters?.map((group, i) => {
-          return (
-            <div style={{ margin: '0 50px' }} key={i}>
-              <p style={{ fontWeight: 600 }}>{group.parent}</p>
-              {group.children.map((child, i, arr) => {
-                return (
-                  <div key={child.pkr}>
-                    {(i === 0 ||
-                      (i > 0 && child.birth !== arr[i - 1].birth)) && (
-                      <p style={{ marginLeft: 12 }}>
-                        {format(parseISO(child.birth), 'dd.MM.yyyy')}
-                      </p>
+    <div className={styles.wrapper}>
+      <Fade in={Boolean(dog)} {...{ timeout: 800 }}>
+        <div className={styles.tree}>
+          <Collapse in={showLitters === null}>
+            <div className={styles.section}>
+              <h1>Rodzice</h1>
+              <Grid container spacing={mediumScreen ? 6 : 10}>
+                {dog?.mom || dog?.dad ? (
+                  <>
+                    {dog?.mom && (
+                      <Grid item xs={12} md={6}>
+                        <SingleCard
+                          width={mediumScreen ? '100%' : 320}
+                          header="Matka"
+                          data={{ name: dog.mom.name, link: dog.mom.pkr }}
+                        />
+                      </Grid>
                     )}
-                    <span style={{ marginLeft: 24 }}>{child.name}</span>
-                  </div>
-                );
-              })}
-              <br />
+                    {dog?.dad && (
+                      <Grid item xs={12} md={6}>
+                        <SingleCard
+                          width={mediumScreen ? '100%' : 320}
+                          header="Ojciec"
+                          data={{ name: dog.dad.name, link: dog.dad.pkr }}
+                        />
+                      </Grid>
+                    )}
+                  </>
+                ) : (
+                  <Grid
+                    item
+                    xs={12}
+                    style={{ fontSize: 20, opacity: 0.8, textAlign: 'center' }}
+                  >
+                    Nie podano
+                  </Grid>
+                )}
+              </Grid>
             </div>
-          );
-        })}
-      </div>
-      <button
-        onClick={() => {
-          !dogs.length && getDogs();
-          setShowModal(true);
-        }}
-      >
-        edytuj psa
-      </button>
-      <CustomModal
-        title={dog?.name ?? ''}
-        open={shoWModal}
-        close={() => setShowModal(false)}
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="name"
-            as={
-              <CustomTextField
-                placeholder="Imię"
-                error={Boolean(errors.name?.message)}
-                color="primary"
-                autoComplete="off"
-                helperText={errors.name?.message}
+          </Collapse>
+          <div className={styles.section}>
+            <h1>Wybrany pies</h1>
+            {dog && (
+              <SingleCard
+                header="Imię"
+                width={320}
+                data={{ name: dog.name, link: '' }}
               />
-            }
-            rules={{ required: 'Podaj numer PKR' }}
-            control={control}
-            defaultValue={dog?.name ?? ''}
-          />
-          <Controller
-            name="momPkr"
-            as={
-              <CustomSelect
-                label="Matka"
-                options={dogs
-                  .filter(d => !d.sex && d.pkr !== dog?.pkr)
-                  .map(dog => {
-                    return { name: dog.name, val: dog.pkr };
+            )}
+          </div>
+          {!isEmpty(litters) && (
+            <div className={styles.section}>
+              <h1>Mioty</h1>
+              <Grid container spacing={mediumScreen ? 6 : 10}>
+                {litters &&
+                  litters.map((litter, i) => {
+                    return (
+                      <Grid
+                        key={litter.parent?.pkr || i}
+                        xs={12}
+                        md={6}
+                        lg={4}
+                        item
+                      >
+                        <SingleCard
+                          header={
+                            litter.parent
+                              ? dog?.sex
+                                ? 'Matka'
+                                : 'Ojciec'
+                              : 'Rodzic'
+                          }
+                          data={{
+                            name: litter.parent?.name ?? '',
+                            link: litter.parent?.pkr ?? '',
+                          }}
+                          toggleLitters={(close?: boolean) =>
+                            close
+                              ? setShowLitters(null)
+                              : setShowLitters(prev =>
+                                  prev === null || prev !== i ? i : null
+                                )
+                          }
+                          selected={showLitters === i}
+                        />
+                      </Grid>
+                    );
                   })}
-              />
-            }
-            control={control}
-            defaultValue={dog?.mom?.pkr ?? ''}
-          />
-          <Controller
-            name="dadPkr"
-            as={
-              <CustomSelect
-                label="Ojciec"
-                options={dogs
-                  .filter(d => d.sex && d.pkr !== dog?.pkr)
-                  .map(dog => {
-                    return { name: dog.name, val: dog.pkr };
+              </Grid>
+            </div>
+          )}
+          <Collapse in={Boolean(showLitters !== null && !isEmpty(litters))}>
+            {litters && showLitters !== null && (
+              <div className={styles.section}>
+                <h1>
+                  Mioty: {dog?.name} i{' '}
+                  {litters[showLitters]?.parent?.name ?? 'Nie podano'}
+                </h1>
+                <Grid container spacing={mediumScreen ? 6 : 10}>
+                  {Object.entries(litters[showLitters].children).map(litter => {
+                    const [date, dogs] = litter;
+                    return (
+                      <Grid key={date} xs={12} md={4} lg={3} item>
+                        <SingleCard
+                          header="Miot"
+                          data={{
+                            name: `${dogs[0].litter} - ${date}`,
+                            link: '',
+                          }}
+                          litter={dogs}
+                        />
+                      </Grid>
+                    );
                   })}
-              />
-            }
-            control={control}
-            defaultValue={dog?.dad?.pkr ?? ''}
-          />
-          <div
-            style={{
-              display: 'flex',
-              alignSelf: 'center',
-              width: '80%',
-              margin: '0 auto',
-              justifyContent: 'space-between',
-              padding: '20px 0 0 ',
+                </Grid>
+              </div>
+            )}
+          </Collapse>
+        </div>
+      </Fade>
+
+      <div className={styles.dogData}>
+        <div className={styles.dogDataTitle}>
+          <h1>Dane psa</h1>
+          <Button
+            color="secondary"
+            variant="contained"
+            onClick={() => {
+              !dogs.length && getDogs();
+              setShowModal(true);
             }}
           >
-            <Button
-              color="primary"
-              variant="outlined"
-              onClick={() => setShowModal(false)}
-            >
-              Zamknij
-            </Button>
-            <Button color="primary" variant="contained" type="submit">
-              Edytuj psa
-            </Button>
-          </div>
-        </form>
-      </CustomModal>
+            Edytuj
+          </Button>
+        </div>
+        <Collapse in={Boolean(dog)}>
+          <DataCell header="Imię" content={dog?.name ?? ''} />
+          <Divider />
+          <DataCell
+            header="Imię rodowodowe"
+            content={dog?.pedigreeName ?? ''}
+          />
+          <Divider />
+          <DataCell header="PKR" content={dog?.pkr ?? ''} />
+          <Divider />
+          <DataCell header="Hodowla" content={dog?.breeding.name ?? ''} />
+        </Collapse>
+      </div>
+      <UpdateDogFrom
+        open={shoWModal}
+        close={() => setShowModal(false)}
+        dog={dog ?? ({} as DogType)}
+        callback={getDogWithChildren}
+        dogs={dogs}
+      />
     </div>
   );
 };

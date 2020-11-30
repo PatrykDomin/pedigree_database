@@ -6,6 +6,7 @@ import { SingleBreeding } from './SingleBreeding';
 import { useStore } from '../../core/store/store';
 import { AddBreedingForm } from './AddBreedingForm';
 import { TextField } from '../../shared/Input/Input';
+import { isEmpty } from 'ramda';
 
 export const Breeding: React.FC = () => {
   const styles = useStyles();
@@ -76,13 +77,17 @@ export const Breeding: React.FC = () => {
           spacing={6}
           className={styles.wrapper}
         >
-          {filteredBreedings.map(el => {
-            return (
-              <Grid key={el.id} item xs={12} md={6} lg={4}>
-                <SingleBreeding name={el.name} breeder={el.breeder} />
-              </Grid>
-            );
-          })}
+          {isEmpty(filteredBreedings) ? (
+            <div className={styles.emptyList}>Brak wyników wyszukiwania</div>
+          ) : (
+            filteredBreedings.map(el => {
+              return (
+                <Grid key={el.id} item xs={12} md={6} lg={4}>
+                  <SingleBreeding name={el.name} breeder={el.breeder} />
+                </Grid>
+              );
+            })
+          )}
         </Grid>
       </Fade>
       <AddBreedingForm open={openModal} close={closeModal} />

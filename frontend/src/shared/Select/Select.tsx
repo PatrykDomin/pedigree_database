@@ -5,11 +5,10 @@ import {
   Select as SelectMaterialUI,
   withTheme,
   makeStyles,
-  SelectProps,
   MenuItem,
 } from '@material-ui/core';
-// import { Autocomplete } from '@material-ui/lab'
-// import { TextField } from '../Input/Input'
+import { Autocomplete } from '@material-ui/lab';
+import { TextField } from '../Input/Input';
 
 export const Select = withStyles((theme: Theme) => ({
   root: {},
@@ -31,30 +30,27 @@ const useStyles = makeStyles((theme: Theme) => ({
   select: {
     width: '100%',
   },
+  disabled: {
+    fontSize: 18,
+    fontWeight: theme.typography.fontWeightBold,
+  },
 }));
 
-type SelectOptions = {
+interface CustomSelectProps {
   label: string;
-  options: { name: string; val: string | number }[];
-  displayEmpty?: boolean;
-};
+  options: { name: string; value: string | number }[];
+}
 
 export const CustomSelect = React.forwardRef(
-  (props: SelectOptions | SelectProps, ref) => {
+  (props: CustomSelectProps, ref) => {
     const styles = useStyles();
-    const { label, options, displayEmpty } = props as SelectOptions;
+    const { label, options } = props;
     return (
       <div className={styles.wrapper}>
         <label className={styles.label}>{label}</label>
-        <Select
-          displayEmpty={displayEmpty}
-          ref={ref}
-          {...props}
-          className={styles.select}
-        >
-          {displayEmpty && <MenuItem value="">—</MenuItem>}
+        <Select ref={ref} {...props} className={styles.select}>
           {options.map(option => (
-            <MenuItem key={option.name} value={option.val}>
+            <MenuItem key={option.name} value={option.value}>
               {option.name}
             </MenuItem>
           ))}
@@ -64,29 +60,45 @@ export const CustomSelect = React.forwardRef(
   }
 );
 
-// type AutocompleteOptions = {
-//   label: string
-//   options: string[]
-//   onChange: (e: any, data: any) => void
-//   error?: string
-// }
+interface CustomAutocompleteProps {
+  label: string;
+  options: { name: string; value: string }[];
+  setValue: (value: string) => void;
+  disabled?: string;
+  defaultValue?: { name: string | undefined; value: string | undefined };
+  disableClearable?: boolean;
+}
 
-// export const CustomAutocomplete = React.forwardRef(
-//   (props: AutocompleteOptions | SelectProps, ref) => {
-//     const styles = useStyles()
-//     const { label, options, error } = props as AutocompleteOptions
-//     return (
-//       <div className={styles.wrapper}>
-//         <label className={styles.label}>{label}</label>
-//         <Autocomplete
-//           options={options}
-//           ref={ref}
-//           renderInput={params => (
-//             <TextField {...params} error={Boolean(error)} helperText={error} />
-//           )}
-//           className={styles.select}
-//         />
-//       </div>
-//     )
-//   }
-// )
+export const CustomAutocomplete = React.forwardRef(
+  (props: CustomAutocompleteProps, ref) => {
+    const styles = useStyles();
+    const {
+      label,
+      options,
+      setValue,
+      disabled,
+      defaultValue,
+      disableClearable = false,
+    } = props;
+    return (
+      <div className={styles.wrapper}>
+        <label className={styles.label}>{label}</label>
+        {disabled ? (
+          <span className={styles.disabled}>{disabled}</span>
+        ) : (
+          <Autocomplete
+            onChange={(e, val) => setValue(val?.value ?? '')}
+            options={options}
+            defaultValue={defaultValue}
+            getOptionSelected={(o, v) => o.value === v.value}
+            disableClearable={disableClearable}
+            getOptionLabel={option => option.name ?? ''}
+            renderInput={params => <TextField {...params} />}
+            className={styles.select}
+            noOptionsText="Brak wyników"
+          />
+        )}
+      </div>
+    );
+  }
+);

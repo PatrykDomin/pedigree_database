@@ -1,10 +1,10 @@
 import create from 'zustand';
 
-import { IBreeding, IDog } from '../apiTypes/apiType';
+import { BreedingType, DogType } from '../apiTypes/apiType';
 
 type StoreState = {
-  dogs: IDog[];
-  breedings: IBreeding[];
+  dogs: DogType[];
+  breedings: BreedingType[];
   fetchDogs: () => Promise<void>;
   fetchBreedings: () => Promise<void>;
 };
@@ -14,12 +14,12 @@ export const useStore = create<StoreState>(set => ({
   breedings: [],
   fetchDogs: async () => {
     const response = await fetch('http://localhost:4200/dog');
-    const dogs: IDog[] = await response.json();
+    const dogs: DogType[] = await response.json();
     set(() => ({ dogs }));
   },
   fetchBreedings: async () => {
     const response = await fetch('http://localhost:4200/breeding');
-    const breedings: IBreeding[] = await response.json();
+    const breedings: BreedingType[] = await response.json();
     set(() => ({ breedings }));
   },
 }));

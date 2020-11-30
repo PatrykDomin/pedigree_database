@@ -1,4 +1,4 @@
-export interface IDog {
+export interface DogType {
   id: number;
   pkr: string;
   birth: string;
@@ -6,19 +6,27 @@ export interface IDog {
   litter: string;
   name: string;
   pedigreeName: string;
-  momChildren?: IDog[];
-  dadChildren?: IDog[];
-  mom?: IDog | null;
+  momChildren?: DogType[];
+  dadChildren?: DogType[];
+  mom?: DogType | null;
   momId?: number | null;
-  dad?: IDog | null;
+  dad?: DogType | null;
   dadId?: number | null;
   breedingId: number;
-  breeding: IBreeding;
+  breeding: BreedingType;
 }
 
-export interface IBreeding {
+export interface DogWithLittersType {
+  dog: DogType;
+  litters: {
+    parent: DogType | null;
+    children: { [index: string]: DogType[] };
+  }[];
+}
+
+export interface BreedingType {
   id: number;
   name: string;
   breeder: string;
-  dogs?: IDog[];
+  dogs?: DogType[];
 }

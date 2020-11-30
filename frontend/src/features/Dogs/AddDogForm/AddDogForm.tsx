@@ -6,7 +6,10 @@ import { Button } from '@material-ui/core';
 import { isEmpty } from 'ramda';
 import { CustomTextField } from '../../../shared/Input/Input';
 import { CustomModal } from '../../../shared/Modal';
-import { CustomSelect } from '../../../shared/Select/Select';
+import {
+  CustomAutocomplete,
+  CustomSelect,
+} from '../../../shared/Select/Select';
 import { format, parseJSON } from 'date-fns';
 
 type FormInputs = {
@@ -26,12 +29,22 @@ enum sex {
   dog,
 }
 
-interface IAddDogForm {
+interface AddDogFormProps {
   open: boolean;
   close: () => void;
+  defParents?: {
+    dadPkr?: string;
+    momPkr?: string;
+  };
+  defBreedingName?: string;
 }
 
-export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
+export const AddDogForm: React.FC<AddDogFormProps> = ({
+  open,
+  close,
+  defParents,
+  defBreedingName,
+}) => {
   const styles = useStyles();
 
   const dogs = useStore(state => state.dogs);
@@ -39,9 +52,19 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
   const getDogs = useStore(state => state.fetchDogs);
   const getBreedings = useStore(state => state.fetchBreedings);
 
-  const { handleSubmit, control, errors } = useForm<FormInputs>({
-    mode: 'onChange',
+  const { handleSubmit, control, errors, setValue } = useForm<FormInputs>({
+    mode: 'onBlur',
   });
+
+  useEffect(() => {
+    if (defParents) {
+      setValue('dadPkr', defParents.dadPkr ?? '');
+      setValue('momPkr', defParents.momPkr ?? '');
+    }
+    if (defBreedingName) {
+      setValue('breedingName', defBreedingName);
+    }
+  }, [defParents, defBreedingName, setValue]);
 
   useEffect(() => {
     if (isEmpty(breedings)) {
@@ -57,7 +80,11 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...values, sex: Boolean(values.sex) }),
+        body: JSON.stringify({
+          ...values,
+          litter: values.litter.toUpperCase(),
+          sex: Boolean(values.sex),
+        }),
       });
       await getDogs();
       close();
@@ -95,7 +122,21 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               helperText={errors.name?.message}
             />
           }
-          rules={{ required: 'Podaj imię psa' }}
+          rules={{
+            required: 'Podaj imię psa',
+            minLength: {
+              value: 3,
+              message: 'Podaj co najmniej 3 litery',
+            },
+            maxLength: {
+              value: 20,
+              message: 'Podaj co najwyżej 20 liter',
+            },
+            pattern: {
+              value: /^[^0-9]+$/i,
+              message: 'Nazwa nie powinna zawierać cyfr i znaków specjalnych',
+            },
+          }}
           control={control}
           defaultValue=""
         />
@@ -110,7 +151,21 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               helperText={errors.pedigreeName?.message}
             />
           }
-          rules={{ required: 'Podaj imię rodowodowe psa' }}
+          rules={{
+            required: 'Podaj nazwę hodowli',
+            minLength: {
+              value: 3,
+              message: 'Podaj co najmniej 3 litery',
+            },
+            maxLength: {
+              value: 30,
+              message: 'Podaj co najwyżej 30 liter',
+            },
+            pattern: {
+              value: /^[^0-9]+$/i,
+              message: 'Nazwa nie powinna zawierać cyfr i znaków specjalnych',
+            },
+          }}
           control={control}
           defaultValue=""
         />
@@ -124,7 +179,13 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               helperText={errors.litter?.message}
             />
           }
-          rules={{ required: 'Podaj literę miotu' }}
+          rules={{
+            required: 'Podaj pojedynczą literę',
+            pattern: {
+              value: /^[A-Z]{1}$/i,
+              message: 'Podaj pojedynczą literę',
+            },
+          }}
           control={control}
           defaultValue=""
         />
@@ -134,12 +195,11 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
             <CustomSelect
               label="Płeć"
               options={[
-                { name: 'Pies', val: sex.dog },
-                { name: 'Suka', val: sex.bitch },
+                { name: 'Pies', value: sex.dog },
+                { name: 'Suka', value: sex.bitch },
               ]}
             />
           }
-          rules={{ required: true }}
           control={control}
           defaultValue={sex.dog}
         />
@@ -154,21 +214,29 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
               type="date"
             />
           }
-          rules={{ required: 'Podaj datę narodzin' }}
+          rules={{
+            required: 'Podaj datę narodzin',
+            validate: value => {
+              return (
+                value <= format(parseJSON(new Date()), 'yyyy-MM-dd') ||
+                'Data nie powinna być w przyszłości'
+              );
+            },
+          }}
           control={control}
           defaultValue={format(parseJSON(new Date()), 'yyyy-MM-dd')}
         />
         <Controller
           name="momPkr"
           as={
-            <CustomSelect
+            <CustomAutocomplete
               label="Matka"
               options={dogs
                 .filter(dog => !dog.sex)
                 .map(dog => {
-                  return { name: dog.name, val: dog.pkr };
+                  return { name: dog.name, value: dog.pkr };
                 })}
-              displayEmpty
+              setValue={value => setValue('momPkr', value)}
             />
           }
           control={control}
@@ -177,14 +245,14 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
         <Controller
           name="dadPkr"
           as={
-            <CustomSelect
+            <CustomAutocomplete
               label="Ojciec"
               options={dogs
                 .filter(dog => dog.sex)
                 .map(dog => {
-                  return { name: dog.name, val: dog.pkr };
+                  return { name: dog.name, value: dog.pkr };
                 })}
-              displayEmpty
+              setValue={value => setValue('dadPkr', value)}
             />
           }
           control={control}
@@ -195,11 +263,18 @@ export const AddDogForm: React.FC<IAddDogForm> = ({ open, close }) => {
             <Controller
               name="breedingName"
               as={
-                <CustomSelect
+                <CustomAutocomplete
                   label="Hodowla"
-                  options={breedings.map(br => {
-                    return { name: br.name, val: br.name };
-                  })}
+                  options={breedings.map(br => ({
+                    name: br.name,
+                    value: br.name,
+                  }))}
+                  setValue={value => setValue('breedingName', value)}
+                  defaultValue={{
+                    name: breedings[0].name,
+                    value: breedings[0].name,
+                  }}
+                  disableClearable
                 />
               }
               control={control}

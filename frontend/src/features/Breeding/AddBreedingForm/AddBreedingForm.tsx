@@ -25,7 +25,7 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
   const getBreedings = useStore(state => state.fetchBreedings);
 
   const { handleSubmit, control, errors, formState } = useForm<FormInputs>({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const onSubmit = async (values: FormInputs) => {
@@ -100,7 +100,7 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
             pattern: {
               value: /^[^0-9]+$/i,
               message:
-                'Imię i nazwisko nie powinno zawierać cyfr i znaków specjalnych',
+                'Imię i nazwisko nie powinny zawierać cyfr i znaków specjalnych',
             },
           }}
           control={control}

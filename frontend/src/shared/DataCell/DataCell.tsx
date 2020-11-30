@@ -25,7 +25,7 @@ export const DataCell: React.FC<DataCellProps> = ({
       className={styles.cell}
       style={{
         color: color ?? 'inherit',
-        margin: customMargin ? 0 : theme.spacing(1),
+        margin: customMargin ? customMargin : theme.spacing(1),
       }}
     >
       <h3 className={styles.header}>{header}</h3>

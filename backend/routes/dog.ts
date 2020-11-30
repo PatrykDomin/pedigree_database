@@ -8,6 +8,7 @@ import {
   getDogWithChildren,
 } from '../services/dog';
 import { groupBy } from 'ramda';
+import { format, parseJSON } from 'date-fns';
 import { Dog } from '@prisma/client';
 
 const dogRouter = Router();
@@ -20,6 +21,7 @@ const groupByMom = groupBy(
     }
   ) => dog.mom?.name ?? ''
 );
+
 const groupByDad = groupBy(
   (
     dog: Dog & {
@@ -29,9 +31,13 @@ const groupByDad = groupBy(
   ) => dog.dad?.name ?? ''
 );
 
+const groupChildrenByDate = groupBy((dog: Dog) =>
+  format(parseJSON(dog.birth), 'dd.MM.yyyy')
+);
+
 dogRouter.get('/dog', async (req, res) => {
   const dogs = await getAllDogs();
-  const sortedDogs = dogs.sort((a, b) => (a.birth > b.birth ? -1 : 1));
+  const sortedDogs = dogs.sort((a, b) => (a.birth >= b.birth ? -1 : 1));
   if (sortedDogs) {
     res.status(200).json(sortedDogs);
   } else {
@@ -45,13 +51,12 @@ dogRouter.get('/dog/:pkr', async (req, res) => {
     const children = dog.sex ? dog.dadChildren : dog.momChildren;
     const groupedChildren = Object.values(
       dog.sex ? groupByMom(children) : groupByDad(children)
-    ).map(group => ({
-      parent: ((dog.sex ? group[0].mom?.name : group[0].dad?.name) ??
-        'Nie podano') as string,
-      children: group.sort((a, b) =>
-        a.birth > b.birth ? 1 : a.birth < b.birth ? -1 : 0
-      ),
-    }));
+    ).map(group => {
+      return {
+        parent: ((dog.sex ? group[0].mom : group[0].dad) ?? null) as Dog | null,
+        children: groupChildrenByDate(group),
+      };
+    });
     res.status(200).json({ dog: dog, litters: groupedChildren });
   } else {
     res.status(400);

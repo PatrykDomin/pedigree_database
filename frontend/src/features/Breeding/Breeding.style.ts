@@ -7,4 +7,12 @@ export default makeStyles((theme: Theme) => ({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  emptyList: {
+    width: '100%',
+    margin: theme.spacing(8, 0, 0),
+    textAlign: 'center',
+    fontSize: 19,
+    opacity: 0.8,
+    color: theme.palette.text.primary,
+  },
 }));

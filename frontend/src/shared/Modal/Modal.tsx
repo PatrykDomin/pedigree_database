@@ -13,6 +13,7 @@ interface CustomModalProps {
   title: string;
   confirmButton?: JSX.Element;
   closeButton?: JSX.Element;
+  maxWidth?: 'sm' | 'md' | 'lg';
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
@@ -21,6 +22,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   title,
   confirmButton,
   closeButton,
+  maxWidth,
   children,
 }) => {
   const styles = useStyles();
@@ -31,7 +33,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       classes={{ paper: styles.dialog }}
       onClose={close}
       fullWidth
-      maxWidth={'sm'}
+      maxWidth={maxWidth ?? 'sm'}
     >
       <DialogTitle classes={{ root: styles.title }} disableTypography>
         {title}

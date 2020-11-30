@@ -7,10 +7,11 @@ import { useStore } from '../../core/store/store';
 import { AddDogForm } from './AddDogForm';
 import { format, parseISO } from 'date-fns';
 import Pagination from '@material-ui/lab/Pagination/Pagination';
-import { Link } from 'react-router-dom';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { DOGS_PER_PAGE } from './Dogs.utils';
 import { SizeMe } from 'react-sizeme';
+import { ReactComponent as DiagramSVG } from '../../images/icons/diagram.svg';
+import { isEmpty } from 'ramda';
 
 // const mocked: IDog[] = [
 //   ...new Array(40)
@@ -40,11 +41,16 @@ export const Dogs: React.FC = () => {
   const styles = useStyles();
   const theme = useTheme<Theme>();
 
+  const history = useHistory();
+  const { state } = useLocation<{ breeding?: string }>();
+
   const [tableHeight, setTableHeight] = useState(0);
 
   const [startingIndex, setStartingIndex] = useState(0);
   const [nameFilter, setNameFilter] = useState('');
-  const [breedingNameFilter, setBreedingNameFilter] = useState('');
+  const [breedingNameFilter, setBreedingNameFilter] = useState(
+    state?.breeding ?? ''
+  );
   const [parentNameFilter, setParentNameFilter] = useState('');
   const [filteredLength, setFilteredLength] = useState(0);
 
@@ -73,6 +79,12 @@ export const Dogs: React.FC = () => {
   const closeModal = () => setOpenModal(false);
 
   useEffect(() => {
+    if (state && state.breeding) {
+      history.replace({ state: {} });
+    }
+  }, [state, history]);
+
+  useEffect(() => {
     if (!dogsLength) {
       getDogs();
     }
@@ -83,7 +95,7 @@ export const Dogs: React.FC = () => {
   }, [filteredDogs, setFilteredLength]);
 
   useEffect(() => {
-    if (startingIndex && filteredLength) {
+    if (filteredLength) {
       setStartingIndex(0);
     }
   }, [filteredLength]);
@@ -143,60 +155,69 @@ export const Dogs: React.FC = () => {
             }, 50);
             return (
               <div>
-                {filteredDogs
-                  .slice(
-                    startingIndex * DOGS_PER_PAGE,
-                    startingIndex * DOGS_PER_PAGE + DOGS_PER_PAGE
-                  )
-                  .map(({ pkr, birth, name, mom, dad, breeding }, i) => {
-                    return (
-                      <Grid
-                        key={pkr}
-                        container
-                        direction="row"
-                        style={
-                          i % 2 === 0
-                            ? { backgroundColor: theme.palette.primary.light }
-                            : {}
-                        }
-                        className={styles.row}
-                      >
-                        <Grid item xs={2}>
-                          <DataCell header="Nr PKR" content={pkr} />
+                {isEmpty(filteredDogs) ? (
+                  <div className={styles.emptyList}>
+                    Brak wyników wyszukiwania
+                  </div>
+                ) : (
+                  filteredDogs
+                    .slice(
+                      startingIndex * DOGS_PER_PAGE,
+                      startingIndex * DOGS_PER_PAGE + DOGS_PER_PAGE
+                    )
+                    .map(({ pkr, birth, name, mom, dad, breeding }, i) => {
+                      return (
+                        <Grid
+                          key={pkr}
+                          container
+                          direction="row"
+                          style={
+                            i % 2 === 0
+                              ? { backgroundColor: theme.palette.primary.light }
+                              : {}
+                          }
+                          className={styles.row}
+                        >
+                          <Grid item xs={2}>
+                            <DataCell header="Nr PKR" content={pkr} />
+                          </Grid>
+                          <Grid item xs={1}>
+                            <DataCell
+                              header="Narodziny"
+                              content={format(parseISO(birth), 'dd.MM.yyyy')}
+                              smallContent
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <DataCell header="Imię" content={name} />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <DataCell
+                              header="Matka"
+                              content={mom?.name ?? 'Nie podano'}
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <DataCell
+                              header="Ojciec"
+                              content={dad?.name ?? 'Nie podano'}
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <DataCell
+                              header="Hodowla"
+                              content={breeding.name}
+                            />
+                          </Grid>
+                          <Grid item xs={1}>
+                            <Link to={`/psy/${pkr}`} className={styles.treeBtn}>
+                              <DiagramSVG />
+                            </Link>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={1}>
-                          <DataCell
-                            header="Narodziny"
-                            content={format(parseISO(birth), 'dd.MM.yyyy')}
-                            smallContent
-                          />
-                        </Grid>
-                        <Grid item xs={2}>
-                          <DataCell header="Imię" content={name} />
-                        </Grid>
-                        <Grid item xs={2}>
-                          <DataCell
-                            header="Matka"
-                            content={mom?.name ?? 'Nie podano'}
-                          />
-                        </Grid>
-                        <Grid item xs={2}>
-                          <DataCell
-                            header="Ojciec"
-                            content={dad?.name ?? 'Nie podano'}
-                          />
-                        </Grid>
-                        <Grid item xs={2}>
-                          <DataCell header="Hodowla" content={breeding.name} />
-                        </Grid>
-                        <Grid item xs={1}>
-                          <Link to={`/psy/${pkr}`} className={styles.treeBtn}>
-                            <AccountTreeIcon />
-                          </Link>
-                        </Grid>
-                      </Grid>
-                    );
-                  })}
+                      );
+                    })
+                )}
               </div>
             );
           }}

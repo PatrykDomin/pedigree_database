@@ -51,12 +51,12 @@ const getDogWithChildren = async (pkr: string) => {
   return dog;
 };
 
-const updateDog = async (id: number, updateData: UpdateDogRequest) => {
+const updateDog = async (pkr: string, updateData: UpdateDogRequest) => {
   const { name, momPkr, dadPkr } = updateData;
   try {
     await prisma.dog.update({
       where: {
-        id,
+        pkr,
       },
       data: {
         name: name,

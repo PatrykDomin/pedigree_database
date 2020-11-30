@@ -12,6 +12,13 @@ export default makeStyles((theme: Theme) => ({
     overflowY: 'hidden',
     transition: 'height 0.4s ease-in-out',
   },
+  emptyList: {
+    margin: theme.spacing(8, 0, 0),
+    textAlign: 'center',
+    fontSize: 19,
+    opacity: 0.8,
+    color: theme.palette.text.primary,
+  },
   row: {
     minWidth: ROW_MIN_WIDTH,
     padding: theme.spacing(1, 0),
@@ -19,18 +26,20 @@ export default makeStyles((theme: Theme) => ({
   },
   treeBtn: {
     alignSelf: 'center',
+    width: 44,
     height: '100%',
+    margin: '0 auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     '& svg': {
-      height: '68%',
-      width: 'auto',
+      width: '100%',
       fill: theme.palette.secondary.main,
-      transition: 'fill 0.2s ease-in-out',
+      transition: 'fill 0.2s ease-in-out, transform 0.2s ease-in-out',
     },
     '&:hover': {
       '& svg': {
+        transform: 'scale(1.08)',
         fill: theme.palette.secondary.dark,
       },
     },
