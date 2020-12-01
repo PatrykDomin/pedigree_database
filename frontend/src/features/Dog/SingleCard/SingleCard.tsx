@@ -101,35 +101,41 @@ export const SingleCard: React.FC<SingleCardProps> = ({
           }
           maxWidth="md"
         >
-          {litter.map((dog, i) => (
-            <Grid
-              key={dog.pkr}
-              container
-              direction="row"
-              style={
-                i % 2 === 0
-                  ? { backgroundColor: theme.palette.secondary.light }
-                  : {}
-              }
-            >
-              <Grid item xs={3}>
-                <DataCell header="Nr PKR" content={dog.pkr} smallContent />
+          <Grid
+            container
+            direction="column"
+            style={{ minWidth: 580, paddingBottom: 4 }}
+          >
+            {litter.map((dog, i) => (
+              <Grid
+                key={dog.pkr}
+                container
+                direction="row"
+                style={
+                  i % 2 === 0
+                    ? { backgroundColor: theme.palette.secondary.light }
+                    : {}
+                }
+              >
+                <Grid item xs={3}>
+                  <DataCell header="Nr PKR" content={dog.pkr} smallContent />
+                </Grid>
+                <Grid item xs={3}>
+                  <DataCell header="Imię" content={dog.name} smallContent />
+                </Grid>
+                <Grid item xs={4}>
+                  <DataCell
+                    header="Imię rodowodowe"
+                    content={dog.pedigreeName}
+                    smallContent
+                  />
+                </Grid>
+                <Grid className={styles.linkBtn} item xs={2}>
+                  <Link to={`/psy/${dog.pkr}`}>Zobacz</Link>
+                </Grid>
               </Grid>
-              <Grid item xs={3}>
-                <DataCell header="Imię" content={dog.name} smallContent />
-              </Grid>
-              <Grid item xs={5}>
-                <DataCell
-                  header="Imię rodowodowe"
-                  content={dog.pedigreeName}
-                  smallContent
-                />
-              </Grid>
-              <Grid item xs={1}>
-                <Link to={`/psy/${dog.pkr}`}>Zobacz</Link>
-              </Grid>
-            </Grid>
-          ))}
+            ))}
+          </Grid>
         </CustomModal>
       )}
     </div>

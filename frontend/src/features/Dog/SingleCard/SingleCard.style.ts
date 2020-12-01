@@ -81,4 +81,16 @@ export default makeStyles((theme: Theme) => ({
   litter: {
     marginBottom: theme.spacing(2),
   },
+  linkBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& a': {
+      margin: theme.spacing(1),
+      fontSize: 18,
+      textDecoration: 'none',
+      color: theme.palette.common.white,
+      fontWeight: theme.typography.fontWeightBold,
+    },
+  },
 }));

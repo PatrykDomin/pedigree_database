@@ -28,7 +28,7 @@ export const Dog: React.FC = () => {
   const dogs = useStore(state => state.dogs);
   const getDogs = useStore(state => state.fetchDogs);
 
-  const [shoWModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [dogData, setDogData] = useState<DogWithLittersType>();
   const [showLitters, setShowLitters] = useState<number | null>(null);
 
@@ -37,6 +37,11 @@ export const Dog: React.FC = () => {
     const data: DogWithLittersType = await response.json();
     setDogData(data);
   }, []);
+
+  useEffect(() => {
+    //reset after dog change
+    setShowLitters(null);
+  }, [pkr]);
 
   useEffect(() => {
     if (pkr) {
@@ -53,7 +58,11 @@ export const Dog: React.FC = () => {
           <Collapse in={showLitters === null}>
             <div className={styles.section}>
               <h1>Rodzice</h1>
-              <Grid container spacing={mediumScreen ? 6 : 10}>
+              <Grid
+                container
+                justify="space-around"
+                spacing={mediumScreen ? 6 : 10}
+              >
                 {dog?.mom || dog?.dad ? (
                   <>
                     {dog?.mom && (
@@ -145,6 +154,7 @@ export const Dog: React.FC = () => {
                   Mioty: {dog?.name} i{' '}
                   {litters[showLitters]?.parent?.name ?? 'Nie podano'}
                 </h1>
+                {console.log(litters, showLitters)}
                 <Grid container spacing={mediumScreen ? 6 : 10}>
                   {Object.entries(litters[showLitters].children).map(litter => {
                     const [date, dogs] = litter;
@@ -196,7 +206,7 @@ export const Dog: React.FC = () => {
         </Collapse>
       </div>
       <UpdateDogFrom
-        open={shoWModal}
+        open={showModal}
         close={() => setShowModal(false)}
         dog={dog ?? ({} as DogType)}
         callback={getDogWithChildren}

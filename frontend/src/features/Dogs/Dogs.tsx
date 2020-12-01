@@ -154,7 +154,7 @@ export const Dogs: React.FC = () => {
               size.height && setTableHeight(size.height + 12);
             }, 50);
             return (
-              <div>
+              <Grid container direction="column">
                 {isEmpty(filteredDogs) ? (
                   <div className={styles.emptyList}>
                     Brak wyników wyszukiwania
@@ -218,7 +218,7 @@ export const Dogs: React.FC = () => {
                       );
                     })
                 )}
-              </div>
+              </Grid>
             );
           }}
         </SizeMe>
