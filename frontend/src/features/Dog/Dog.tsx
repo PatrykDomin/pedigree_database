@@ -70,7 +70,10 @@ export const Dog: React.FC = () => {
                         <SingleCard
                           width={mediumScreen ? '100%' : 320}
                           header="Matka"
-                          data={{ name: dog.mom.name, link: dog.mom.pkr }}
+                          data={{
+                            name: dog.mom.pedigreeName,
+                            link: dog.mom.pkr,
+                          }}
                         />
                       </Grid>
                     )}
@@ -79,7 +82,10 @@ export const Dog: React.FC = () => {
                         <SingleCard
                           width={mediumScreen ? '100%' : 320}
                           header="Ojciec"
-                          data={{ name: dog.dad.name, link: dog.dad.pkr }}
+                          data={{
+                            name: dog.dad.pedigreeName,
+                            link: dog.dad.pkr,
+                          }}
                         />
                       </Grid>
                     )}
@@ -102,7 +108,7 @@ export const Dog: React.FC = () => {
               <SingleCard
                 header="Imię"
                 width={320}
-                data={{ name: dog.name, link: '' }}
+                data={{ name: dog.pedigreeName, link: '' }}
               />
             )}
           </div>
@@ -129,7 +135,7 @@ export const Dog: React.FC = () => {
                               : 'Rodzic'
                           }
                           data={{
-                            name: litter.parent?.name ?? '',
+                            name: litter.parent?.pedigreeName ?? '',
                             link: litter.parent?.pkr ?? '',
                           }}
                           toggleLitters={(close?: boolean) =>
@@ -151,8 +157,8 @@ export const Dog: React.FC = () => {
             {litters && showLitters !== null && (
               <div className={styles.section}>
                 <h1>
-                  Mioty: {dog?.name} i{' '}
-                  {litters[showLitters]?.parent?.name ?? 'Nie podano'}
+                  Mioty: {dog?.pedigreeName} i{' '}
+                  {litters[showLitters]?.parent?.pedigreeName ?? 'Nie podano'}
                 </h1>
                 {console.log(litters, showLitters)}
                 <Grid container spacing={mediumScreen ? 6 : 10}>

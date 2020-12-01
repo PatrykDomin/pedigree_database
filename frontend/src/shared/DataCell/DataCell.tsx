@@ -29,7 +29,7 @@ export const DataCell: React.FC<DataCellProps> = ({
       }}
     >
       <h3 className={styles.header}>{header}</h3>
-      <p style={{ fontSize: smallContent ? 17 : 18 }}>{content}</p>
+      <p style={{ fontSize: smallContent ? 16 : 17 }}>{content}</p>
     </div>
   );
 };

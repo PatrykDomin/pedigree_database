@@ -57,7 +57,9 @@ export const Dogs: React.FC = () => {
   const dogsLength = useStore(state => state.dogs.length);
   const filteredDogs = useStore(state =>
     state.dogs
-      .filter(dog => dog.name.toLowerCase().includes(nameFilter.toLowerCase()))
+      .filter(dog =>
+        dog.pedigreeName.toLowerCase().includes(nameFilter.toLowerCase())
+      )
       .filter(dog =>
         dog.breeding.name
           .toLowerCase()
@@ -108,7 +110,7 @@ export const Dogs: React.FC = () => {
           <TextField
             color="secondary"
             variant="outlined"
-            label="Imię"
+            label="Imię rodowodowe"
             value={nameFilter}
             onChange={e => {
               setNameFilter(e.target.value);
@@ -165,58 +167,69 @@ export const Dogs: React.FC = () => {
                       startingIndex * DOGS_PER_PAGE,
                       startingIndex * DOGS_PER_PAGE + DOGS_PER_PAGE
                     )
-                    .map(({ pkr, birth, name, mom, dad, breeding }, i) => {
-                      return (
-                        <Grid
-                          key={pkr}
-                          container
-                          direction="row"
-                          style={
-                            i % 2 === 0
-                              ? { backgroundColor: theme.palette.primary.light }
-                              : {}
-                          }
-                          className={styles.row}
-                        >
-                          <Grid item xs={2}>
-                            <DataCell header="Nr PKR" content={pkr} />
+                    .map(
+                      ({ pkr, birth, pedigreeName, mom, dad, breeding }, i) => {
+                        return (
+                          <Grid
+                            key={pkr}
+                            container
+                            direction="row"
+                            style={
+                              i % 2 === 0
+                                ? {
+                                    backgroundColor:
+                                      theme.palette.primary.light,
+                                  }
+                                : {}
+                            }
+                            className={styles.row}
+                          >
+                            <Grid item xs={2}>
+                              <DataCell header="Nr PKR" content={pkr} />
+                            </Grid>
+                            <Grid item xs={1}>
+                              <DataCell
+                                header="Narodziny"
+                                content={format(parseISO(birth), 'dd.MM.yyyy')}
+                                smallContent
+                              />
+                            </Grid>
+                            <Grid item xs={2}>
+                              <DataCell
+                                header="Imię rodowodowe"
+                                content={pedigreeName}
+                              />
+                            </Grid>
+                            <Grid item xs={2}>
+                              <DataCell
+                                header="Matka"
+                                content={mom?.name ?? 'Nie podano'}
+                              />
+                            </Grid>
+                            <Grid item xs={2}>
+                              <DataCell
+                                header="Ojciec"
+                                content={dad?.name ?? 'Nie podano'}
+                              />
+                            </Grid>
+                            <Grid item xs={2}>
+                              <DataCell
+                                header="Hodowla"
+                                content={breeding.name}
+                              />
+                            </Grid>
+                            <Grid item xs={1}>
+                              <Link
+                                to={`/psy/${pkr}`}
+                                className={styles.treeBtn}
+                              >
+                                <DiagramSVG />
+                              </Link>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={1}>
-                            <DataCell
-                              header="Narodziny"
-                              content={format(parseISO(birth), 'dd.MM.yyyy')}
-                              smallContent
-                            />
-                          </Grid>
-                          <Grid item xs={2}>
-                            <DataCell header="Imię" content={name} />
-                          </Grid>
-                          <Grid item xs={2}>
-                            <DataCell
-                              header="Matka"
-                              content={mom?.name ?? 'Nie podano'}
-                            />
-                          </Grid>
-                          <Grid item xs={2}>
-                            <DataCell
-                              header="Ojciec"
-                              content={dad?.name ?? 'Nie podano'}
-                            />
-                          </Grid>
-                          <Grid item xs={2}>
-                            <DataCell
-                              header="Hodowla"
-                              content={breeding.name}
-                            />
-                          </Grid>
-                          <Grid item xs={1}>
-                            <Link to={`/psy/${pkr}`} className={styles.treeBtn}>
-                              <DiagramSVG />
-                            </Link>
-                          </Grid>
-                        </Grid>
-                      );
-                    })
+                        );
+                      }
+                    )
                 )}
               </Grid>
             );
