@@ -6,6 +6,7 @@ interface DataCellProps {
   header: string;
   content: string;
   smallContent?: boolean;
+  contentAsAnchor?: boolean;
   color?: string;
   customMargin?: string | number;
 }
@@ -14,6 +15,7 @@ export const DataCell: React.FC<DataCellProps> = ({
   header,
   content,
   smallContent,
+  contentAsAnchor,
   color,
   customMargin,
 }) => {
@@ -29,7 +31,13 @@ export const DataCell: React.FC<DataCellProps> = ({
       }}
     >
       <h3 className={styles.header}>{header}</h3>
-      <p style={{ fontSize: smallContent ? 16 : 17 }}>{content}</p>
+      {contentAsAnchor ? (
+        <a className={styles.anchor} href={content} target="__blank">
+          {content}
+        </a>
+      ) : (
+        <p style={{ fontSize: smallContent ? 16 : 17 }}>{content}</p>
+      )}
     </div>
   );
 };

@@ -17,6 +17,7 @@ import {
   useTheme,
 } from '@material-ui/core';
 import { isEmpty } from 'ramda';
+import { AddTitleForm } from './AddTitles';
 
 export const Dog: React.FC = () => {
   const styles = useStyles();
@@ -29,6 +30,7 @@ export const Dog: React.FC = () => {
   const getDogs = useStore(state => state.fetchDogs);
 
   const [showModal, setShowModal] = useState(false);
+  const [showTitleModal, setShowTitleModal] = useState(false);
   const [dogData, setDogData] = useState<DogWithLittersType>();
   const [showLitters, setShowLitters] = useState<number | null>(null);
 
@@ -160,7 +162,6 @@ export const Dog: React.FC = () => {
                   Mioty: {dog?.pedigreeName} i{' '}
                   {litters[showLitters]?.parent?.pedigreeName ?? 'Nie podano'}
                 </h1>
-                {console.log(litters, showLitters)}
                 <Grid container spacing={mediumScreen ? 6 : 10}>
                   {Object.entries(litters[showLitters].children).map(litter => {
                     const [date, dogs] = litter;
@@ -209,6 +210,39 @@ export const Dog: React.FC = () => {
           <DataCell header="PKR" content={dog?.pkr ?? ''} />
           <Divider />
           <DataCell header="Hodowla" content={dog?.breeding.name ?? ''} />
+          <Divider />
+          <DataCell
+            header="Badania"
+            contentAsAnchor={Boolean(dog?.phisical)}
+            content={dog?.phisical ?? '-'}
+          />
+        </Collapse>
+        <Divider />
+        <Divider />
+        <Collapse in={Boolean(dog)} style={{ marginBottom: 8 }}>
+          {dog?.titles.length ? (
+            <>
+              <Divider />
+              <DataCell header="Osiągnięcia" content="" />
+              {dog?.titles.map((title, index) => {
+                return (
+                  <p key={index} style={{ margin: '0 4px' }}>
+                    {title}
+                  </p>
+                );
+              })}
+            </>
+          ) : null}
+        </Collapse>
+        <Collapse in={Boolean(dog)}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setShowTitleModal(true)}
+            size="small"
+          >
+            Dodaj osiągnięcie
+          </Button>
         </Collapse>
       </div>
       <UpdateDogFrom
@@ -217,6 +251,12 @@ export const Dog: React.FC = () => {
         dog={dog ?? ({} as DogType)}
         callback={getDogWithChildren}
         dogs={dogs}
+      />
+      <AddTitleForm
+        open={showTitleModal}
+        close={() => setShowTitleModal(false)}
+        dog={dog ?? ({} as DogType)}
+        callback={getDogWithChildren}
       />
     </div>
   );

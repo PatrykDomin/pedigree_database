@@ -173,6 +173,7 @@ export const Dogs: React.FC = () => {
                           <Grid
                             key={pkr}
                             container
+                            alignItems="center"
                             direction="row"
                             style={
                               i % 2 === 0

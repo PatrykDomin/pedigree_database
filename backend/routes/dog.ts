@@ -6,6 +6,8 @@ import {
   updateDog,
   UpdateDogRequest,
   getDogWithChildren,
+  UpdateTitles,
+  addTitle,
 } from '../services/dog';
 import { groupBy } from 'ramda';
 import { format, parseJSON } from 'date-fns';
@@ -68,6 +70,16 @@ dogRouter.put('/dog/:pkr', async (req, res) => {
   try {
     await updateDog(req.params.pkr, body);
     res.status(200).json({ message: 'Dog updated :)' });
+  } catch (err) {
+    console.log('err', err);
+    res.status(400).json({ message: 'Update fail' });
+  }
+});
+
+dogRouter.put('/dog/:pkr/title', async (req, res) => {
+  try {
+    await addTitle(req.params.pkr, req.body.title as string);
+    res.status(200).json({ message: 'Title added :)' });
   } catch (err) {
     console.log('err', err);
     res.status(400).json({ message: 'Update fail' });

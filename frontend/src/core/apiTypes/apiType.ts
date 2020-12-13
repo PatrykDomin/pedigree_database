@@ -12,6 +12,8 @@ export interface DogType {
   momId?: number | null;
   dad?: DogType | null;
   dadId?: number | null;
+  titles: string[];
+  phisical: string | null;
   breedingId: number;
   breeding: BreedingType;
 }

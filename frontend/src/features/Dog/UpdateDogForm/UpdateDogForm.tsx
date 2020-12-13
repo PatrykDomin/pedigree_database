@@ -28,16 +28,18 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
     momPkr: number;
     dadPkr: number;
     name: string;
+    phisical: string;
   }>({
     mode: 'onBlur',
   });
 
-  const { pkr, dad, mom, name } = dog ?? {};
+  const { pkr, dad, mom, name, phisical } = dog ?? {};
 
   const onSubmit = async (data: {
     momPkr: string;
     dadPkr: string;
     name: string;
+    phisical: string;
   }) => {
     try {
       await fetch(`http://localhost:4200/dog/${pkr}`, {
@@ -93,7 +95,7 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
             <CustomAutocomplete
               label="Matka"
               options={dogs
-                .filter(dog => dog.sex)
+                .filter(d => !d.sex && d.pkr !== dog.pkr)
                 .map(dog => {
                   return { name: dog.name, value: dog.pkr };
                 })}
@@ -110,7 +112,7 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
             <CustomAutocomplete
               label="Ojciec"
               options={dogs
-                .filter(dog => dog.sex)
+                .filter(d => d.sex && d.pkr !== dog.pkr)
                 .map(dog => {
                   return { name: dog.name, value: dog.pkr };
                 })}
@@ -120,6 +122,27 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
           }
           control={control}
           defaultValue={dad?.pkr ?? ''}
+        />
+        <Controller
+          name="phisical"
+          as={
+            <CustomTextField
+              placeholder="Badania (link)"
+              error={Boolean(errors.phisical?.message)}
+              color="primary"
+              autoComplete="off"
+              helperText={errors.phisical?.message}
+            />
+          }
+          rules={{
+            required: 'Podaj link do aktualnych badań',
+            minLength: {
+              value: 3,
+              message: 'Podaj co najmniej 3 litery',
+            },
+          }}
+          control={control}
+          defaultValue={phisical ?? ''}
         />
         <div className={styles.btnWrapper}>
           <Button color="primary" variant="outlined" onClick={close}>

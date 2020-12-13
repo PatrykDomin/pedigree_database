@@ -36,6 +36,9 @@ model Dog {
   momChildren Dog[] @relation("mom")
   dadChildren Dog[] @relation("dad")
 
+  titles   String[]
+  phisical String? //url
+
   breedingId Int
   breeding   Breeding @relation(fields: [breedingId], references: [id])
 }

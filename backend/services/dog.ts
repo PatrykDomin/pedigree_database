@@ -18,6 +18,11 @@ export interface UpdateDogRequest {
   name: string;
   momPkr?: string;
   dadPkr?: string;
+  phisical?: string;
+}
+
+export interface UpdateTitles {
+  title: string;
 }
 
 const getAllDogs = async () => {
@@ -32,7 +37,7 @@ const getAllDogs = async () => {
 };
 
 const getDogWithChildren = async (pkr: string) => {
-  const dog = await prisma.dog.findOne({
+  const dog = await prisma.dog.findUnique({
     where: {
       pkr,
     },
@@ -52,20 +57,41 @@ const getDogWithChildren = async (pkr: string) => {
 };
 
 const updateDog = async (pkr: string, updateData: UpdateDogRequest) => {
-  const { name, momPkr, dadPkr } = updateData;
+  const { name, momPkr, dadPkr, phisical } = updateData;
   try {
     await prisma.dog.update({
       where: {
         pkr,
       },
       data: {
-        name: name,
+        name,
         mom: momPkr ? { connect: { pkr: momPkr } } : undefined,
         dad: dadPkr ? { connect: { pkr: dadPkr } } : undefined,
+        phisical,
       },
     });
   } catch (err) {
     console.log('err', err);
+  }
+};
+
+const addTitle = async (pkr: string, title: string) => {
+  const dog = await prisma.dog.findUnique({
+    where: { pkr },
+  });
+  if (dog) {
+    try {
+      await prisma.dog.update({
+        where: {
+          pkr,
+        },
+        data: {
+          titles: [...dog?.titles, title],
+        },
+      });
+    } catch (err) {
+      console.log('err', err);
+    }
   }
 };
 
@@ -96,4 +122,4 @@ const addDog = async (dogData: AddDogRequest) => {
   });
 };
 
-export { getAllDogs, getDogWithChildren, updateDog, addDog };
+export { getAllDogs, getDogWithChildren, updateDog, addDog, addTitle };
