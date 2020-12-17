@@ -144,7 +144,7 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
           name="pedigreeName"
           as={
             <CustomTextField
-              placeholder="Imię rodowodowe psa"
+              placeholder="Imię rodowodowe"
               error={Boolean(errors.pedigreeName?.message)}
               color="primary"
               autoComplete="off"

@@ -4,6 +4,9 @@ export default makeStyles((theme: Theme) => ({
   wrapper: {
     display: 'flex',
     width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column-reverse',
+    },
   },
   tree: {
     maxWidth: 1260,

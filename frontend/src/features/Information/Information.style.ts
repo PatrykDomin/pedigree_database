@@ -7,6 +7,12 @@ export default makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(10, 12),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(5, 6),
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(2, 0),
+    },
   },
   row: {
     display: 'flex',
@@ -16,11 +22,6 @@ export default makeStyles((theme: Theme) => ({
     '&:last-child': {
       marginTop: theme.spacing(4),
       flexDirection: 'row-reverse',
-    },
-    '& img': {
-      width: '36%',
-      borderRadius: 16,
-      boxShadow: `-6px 6px 4px ${theme.palette.primary.dark}`,
     },
   },
   content: {
@@ -34,6 +35,9 @@ export default makeStyles((theme: Theme) => ({
       fontSize: 14,
       letterSpacing: 0.8,
     },
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   image: {
     width: '32%',
@@ -42,5 +46,8 @@ export default makeStyles((theme: Theme) => ({
     borderRadius: 16,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 }));

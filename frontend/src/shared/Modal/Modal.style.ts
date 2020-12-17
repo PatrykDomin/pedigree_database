@@ -8,16 +8,23 @@ export default makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(8, 6),
     },
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(4, 3),
+    },
   },
   title: {
-    fontSize: 30,
+    fontSize: 32,
     textAlign: 'center',
-    padding: theme.spacing(0, 0, 7),
+    padding: theme.spacing(0, 0, 6),
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 28,
+      padding: theme.spacing(0, 0, 4),
+    },
   },
   content: {
     padding: theme.spacing(0, 5),
     [theme.breakpoints.down('sm')]: {
-      padding: 0,
+      padding: theme.spacing(0, 2),
     },
   },
   actions: {

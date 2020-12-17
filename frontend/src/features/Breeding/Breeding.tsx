@@ -39,7 +39,6 @@ export const Breeding: React.FC = () => {
       filter={
         <>
           <TextField
-            style={{ width: 280 }}
             color="secondary"
             variant="outlined"
             label="Nazwa hodowli"
@@ -49,7 +48,6 @@ export const Breeding: React.FC = () => {
             }}
           />
           <TextField
-            style={{ width: 280 }}
             color="secondary"
             variant="outlined"
             label="Hodowca"

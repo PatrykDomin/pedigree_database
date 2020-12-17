@@ -51,7 +51,6 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
         body: JSON.stringify(data),
       });
       callback(pkr);
-      close();
     } catch (err) {
       console.log('err: ', err);
     }

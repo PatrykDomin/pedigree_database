@@ -39,6 +39,7 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
         body: JSON.stringify(values),
       });
       await getBreedings();
+      close();
     } catch (err) {
       console.log('err: ', err);
     }

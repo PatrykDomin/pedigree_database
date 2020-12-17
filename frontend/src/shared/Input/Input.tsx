@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 18,
     width: 200,
     minWidth: 200,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 16,
+      width: 140,
+      minWidth: 140,
+      marginRight: theme.spacing(2),
+    },
   },
 }));
 
