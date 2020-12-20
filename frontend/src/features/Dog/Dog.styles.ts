@@ -5,7 +5,7 @@ export default makeStyles((theme: Theme) => ({
     display: 'flex',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column-reverse',
+      flexDirection: 'column-reverseh',
     },
   },
   tree: {
