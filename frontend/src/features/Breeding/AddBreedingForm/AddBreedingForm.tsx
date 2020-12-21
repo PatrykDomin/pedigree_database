@@ -8,7 +8,7 @@ import { CustomModal } from '../../../shared/Modal';
 
 type FormInputs = {
   name: string;
-  breeder: string;
+  contactPage: string;
 };
 
 interface IAddBreedingForm {
@@ -78,18 +78,18 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
           defaultValue=""
         />
         <Controller
-          name="breeder"
+          name="contactPage"
           as={
             <CustomTextField
-              placeholder="Hodowca"
-              error={Boolean(errors.breeder?.message)}
+              placeholder="Adres internetowy hodowli"
+              error={Boolean(errors.contactPage?.message)}
               color="primary"
               autoComplete="off"
-              helperText={errors.breeder?.message}
+              helperText={errors.contactPage?.message}
             />
           }
           rules={{
-            required: 'Podaj imię i nazwisko hodowcy',
+            required: 'Podaj adres strony internetowej hodowli',
             minLength: {
               value: 3,
               message: 'Podaj co najmniej 3 litery',
@@ -97,11 +97,6 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
             maxLength: {
               value: 36,
               message: 'Podaj co najwyżej 36 liter',
-            },
-            pattern: {
-              value: /^[^0-9]+$/i,
-              message:
-                'Imię i nazwisko nie powinny zawierać cyfr i znaków specjalnych',
             },
           }}
           control={control}

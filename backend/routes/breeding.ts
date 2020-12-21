@@ -1,31 +1,31 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import {
   addNewBreeding,
   getBreedingByName,
   getBreedings,
-} from '../services/breeding'
+} from '../services/breeding';
 
-const breedingRouter = Router()
+const breedingRouter = Router();
 
 breedingRouter.get('/breeding', async (req, res) => {
-  const breedings = await getBreedings()
-  res.status(200).json(breedings)
-})
+  const breedings = await getBreedings();
+  res.status(200).json(breedings);
+});
 
 breedingRouter.get('/breeding/:name', async (req, res) => {
-  const { params } = req
-  const breeding = await getBreedingByName(params.name)
-  res.status(200).json(breeding)
-})
+  const { params } = req;
+  const breeding = await getBreedingByName(params.name);
+  res.status(200).json(breeding);
+});
 
 breedingRouter.post('/breeding', async (req, res) => {
-  const { body } = req
-  if (body?.breeder && body?.name) {
-    await addNewBreeding(body.breeder, body.name)
-    res.status(200).json({ message: 'Dodano hodowlę' })
+  const { body } = req;
+  if (body?.contactPage && body?.name) {
+    await addNewBreeding(body.contactPage, body.name);
+    res.status(200).json({ message: 'Dodano hodowlę' });
   } else {
-    res.status(400).json({ message: 'Empty body' })
+    res.status(400).json({ message: 'Empty body' });
   }
-})
+});
 
-export { breedingRouter }
+export { breedingRouter };

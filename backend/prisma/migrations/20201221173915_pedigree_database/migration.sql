@@ -2,7 +2,7 @@
 CREATE TABLE "Breeding" (
 "id" SERIAL,
     "name" TEXT NOT NULL,
-    "breeder" TEXT NOT NULL,
+    "contactPage" TEXT NOT NULL,
 
     PRIMARY KEY ("id")
 );

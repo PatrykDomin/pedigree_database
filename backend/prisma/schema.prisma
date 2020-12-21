@@ -11,10 +11,10 @@ generator client {
 }
 
 model Breeding {
-  id      Int    @id @default(autoincrement())
-  name    String @unique
-  breeder String
-  dogs    Dog[]
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  contactPage String
+  dogs        Dog[]
 }
 
 model Dog {
