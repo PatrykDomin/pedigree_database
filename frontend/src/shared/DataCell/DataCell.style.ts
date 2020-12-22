@@ -15,6 +15,7 @@ export default makeStyles((theme: Theme) => ({
     textDecoration: 'none',
     color: theme.palette.secondary.dark,
     transition: 'color 0.2s ease-in-out',
+    cursor: 'pointer',
     '&:hover': {
       color: theme.palette.primary.dark,
     },

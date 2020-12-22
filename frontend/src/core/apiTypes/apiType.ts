@@ -29,6 +29,6 @@ export interface DogWithLittersType {
 export interface BreedingType {
   id: number;
   name: string;
-  breeder: string;
+  webPage: string;
   dogs?: DogType[];
 }

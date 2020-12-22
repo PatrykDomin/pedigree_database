@@ -12,15 +12,12 @@ export const Breeding: React.FC = () => {
   const styles = useStyles();
 
   const [nameFilter, setNameFilter] = useState('');
-  const [breederFilter, setBreederFilter] = useState('');
 
   const breedingsLength = useStore(state => state.breedings.length);
   const filteredBreedings = useStore(state =>
-    state.breedings
-      .filter(br => br.name.toLowerCase().includes(nameFilter.toLowerCase()))
-      .filter(br =>
-        br.breeder.toLowerCase().includes(breederFilter.toLowerCase())
-      )
+    state.breedings.filter(br =>
+      br.name.toLowerCase().includes(nameFilter.toLowerCase())
+    )
   );
   const getBreedings = useStore(state => state.fetchBreedings);
 
@@ -45,15 +42,6 @@ export const Breeding: React.FC = () => {
             value={nameFilter}
             onChange={e => {
               setNameFilter(e.target.value);
-            }}
-          />
-          <TextField
-            color="secondary"
-            variant="outlined"
-            label="Hodowca"
-            value={breederFilter}
-            onChange={e => {
-              setBreederFilter(e.target.value);
             }}
           />
         </>
@@ -81,7 +69,7 @@ export const Breeding: React.FC = () => {
             filteredBreedings.map(el => {
               return (
                 <Grid key={el.id} item xs={12} md={6} lg={4}>
-                  <SingleBreeding name={el.name} breeder={el.breeder} />
+                  <SingleBreeding name={el.name} webPage={el.webPage} />
                 </Grid>
               );
             })

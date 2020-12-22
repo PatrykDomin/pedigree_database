@@ -134,7 +134,6 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
             />
           }
           rules={{
-            required: 'Podaj link do aktualnych badań',
             minLength: {
               value: 3,
               message: 'Podaj co najmniej 3 litery',

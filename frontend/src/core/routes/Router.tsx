@@ -21,7 +21,7 @@ export const Router = () => {
         <Dog />
       </Route>
       <Route path="*">
-        <Redirect to="/psy" />
+        <Redirect to="/informacje" />
       </Route>
     </Switch>
   );

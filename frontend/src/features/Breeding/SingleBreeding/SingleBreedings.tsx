@@ -5,9 +5,9 @@ import { ReactComponent as BreedingSVG } from '../../../images/icons/breeding.sv
 import useStyles from './SingleBreedings.style';
 import { useHistory } from 'react-router-dom';
 
-export const SingleBreeding: React.FC<{ name: string; breeder: string }> = ({
+export const SingleBreeding: React.FC<{ name: string; webPage: string }> = ({
   name,
-  breeder,
+  webPage,
 }) => {
   const styles = useStyles();
   const theme = useTheme<Theme>();
@@ -27,8 +27,9 @@ export const SingleBreeding: React.FC<{ name: string; breeder: string }> = ({
         />
       </div>
       <DataCell
-        header="Hodowca"
-        content={breeder}
+        header="Strona intenetowa hodowli"
+        contentAsAnchor
+        content={webPage}
         color={theme.palette.common.white}
         customMargin={theme.spacing(0, 2, 0, 0)}
       />

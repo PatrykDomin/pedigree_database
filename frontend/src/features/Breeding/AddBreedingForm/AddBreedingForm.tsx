@@ -8,7 +8,7 @@ import { CustomModal } from '../../../shared/Modal';
 
 type FormInputs = {
   name: string;
-  contactPage: string;
+  webPage: string;
 };
 
 interface IAddBreedingForm {
@@ -78,14 +78,14 @@ export const AddBreedingForm: React.FC<IAddBreedingForm> = ({
           defaultValue=""
         />
         <Controller
-          name="contactPage"
+          name="webPage"
           as={
             <CustomTextField
               placeholder="Adres internetowy hodowli"
-              error={Boolean(errors.contactPage?.message)}
+              error={Boolean(errors.webPage?.message)}
               color="primary"
               autoComplete="off"
-              helperText={errors.contactPage?.message}
+              helperText={errors.webPage?.message}
             />
           }
           rules={{

@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import useStyles from './Navbar.style';
 import { Link } from 'react-router-dom';
-import {
-  Button,
-  Popover,
-  Theme,
-  useMediaQuery,
-  useTheme,
-} from '@material-ui/core';
+import { Popover, Theme, useMediaQuery, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 export const Navbar: React.FC = () => {

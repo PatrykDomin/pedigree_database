@@ -67,10 +67,12 @@ export const Dogs: React.FC = () => {
       )
       .filter(dog =>
         parentNameFilter
-          ? dog.mom?.name
+          ? dog.mom?.pedigreeName
               .toLowerCase()
               .includes(parentNameFilter.toLowerCase()) ||
-            dog.dad?.name.toLowerCase().includes(parentNameFilter.toLowerCase())
+            dog.dad?.pedigreeName
+              .toLowerCase()
+              .includes(parentNameFilter.toLowerCase())
           : dog
       )
   );
@@ -119,7 +121,7 @@ export const Dogs: React.FC = () => {
           <TextField
             color="secondary"
             variant="outlined"
-            label="Imię rodzica"
+            label="Imię rodowodowe rodzica"
             value={parentNameFilter}
             onChange={e => {
               setParentNameFilter(e.target.value);
@@ -204,13 +206,13 @@ export const Dogs: React.FC = () => {
                             <Grid item xs={2}>
                               <DataCell
                                 header="Matka"
-                                content={mom?.name ?? 'Nie podano'}
+                                content={mom?.pedigreeName ?? 'Nie podano'}
                               />
                             </Grid>
                             <Grid item xs={2}>
                               <DataCell
                                 header="Ojciec"
-                                content={dad?.name ?? 'Nie podano'}
+                                content={dad?.pedigreeName ?? 'Nie podano'}
                               />
                             </Grid>
                             <Grid item xs={2}>

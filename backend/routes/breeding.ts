@@ -20,8 +20,8 @@ breedingRouter.get('/breeding/:name', async (req, res) => {
 
 breedingRouter.post('/breeding', async (req, res) => {
   const { body } = req;
-  if (body?.contactPage && body?.name) {
-    await addNewBreeding(body.contactPage, body.name);
+  if (body?.webPage && body?.name) {
+    await addNewBreeding(body.webPage, body.name);
     res.status(200).json({ message: 'Dodano hodowlę' });
   } else {
     res.status(400).json({ message: 'Empty body' });

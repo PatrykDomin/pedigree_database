@@ -23,10 +23,10 @@ const getBreedingByName = async (name: string) => {
   return breedings;
 };
 
-const addNewBreeding = async (contactPage: string, name: string) => {
+const addNewBreeding = async (webPage: string, name: string) => {
   await prisma.breeding.create({
     data: {
-      contactPage,
+      webPage,
       name,
     },
   });

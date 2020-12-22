@@ -214,7 +214,8 @@ export const Dog: React.FC = () => {
           <DataCell
             header="Badania"
             contentAsAnchor={Boolean(dog?.phisical)}
-            content={dog?.phisical ?? '-'}
+            smallContent
+            content={dog?.phisical || '-'}
           />
         </Collapse>
         <Divider />

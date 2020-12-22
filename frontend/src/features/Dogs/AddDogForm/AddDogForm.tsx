@@ -152,7 +152,7 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
             />
           }
           rules={{
-            required: 'Podaj nazwę hodowli',
+            required: 'Podaj imię rodowodowe',
             minLength: {
               value: 3,
               message: 'Podaj co najmniej 3 litery',

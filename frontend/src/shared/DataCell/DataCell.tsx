@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import useStyles from './DataCell.style';
 import { useTheme, Theme } from '@material-ui/core';
 
@@ -22,6 +22,13 @@ export const DataCell: React.FC<DataCellProps> = ({
   const styles = useStyles();
   const theme = useTheme<Theme>();
 
+  const webPage = useMemo(() => {
+    if (contentAsAnchor) {
+      return content.includes('http') ? content : 'http://' + content;
+    }
+    return undefined;
+  }, []);
+
   return (
     <div
       className={styles.cell}
@@ -32,7 +39,12 @@ export const DataCell: React.FC<DataCellProps> = ({
     >
       <h3 className={styles.header}>{header}</h3>
       {contentAsAnchor ? (
-        <a className={styles.anchor} href={content} target="__blank">
+        <a
+          className={styles.anchor}
+          style={{ fontSize: smallContent ? 14 : 16, color }}
+          href={webPage}
+          target="__blank"
+        >
           {content}
         </a>
       ) : (
