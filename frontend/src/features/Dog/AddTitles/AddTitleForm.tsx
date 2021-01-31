@@ -47,7 +47,7 @@ export const AddTitleForm: React.FC<AddTitleFromProps> = ({
   };
 
   return (
-    <CustomModal title={dog?.name ?? ''} open={open} close={close}>
+    <CustomModal title={dog?.pedigreeName ?? ''} open={open} close={close}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="title"

@@ -18,6 +18,7 @@ type FormInputs = {
   birth: Date;
   name: string;
   pedigreeName: string;
+  breed: string;
   litter: string;
   breedingName: string;
   momPkr?: string;
@@ -170,6 +171,35 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
           defaultValue=""
         />
         <Controller
+          name="breed"
+          as={
+            <CustomTextField
+              placeholder="Rasa"
+              error={Boolean(errors.breed?.message)}
+              color="primary"
+              autoComplete="off"
+              helperText={errors.breed?.message}
+            />
+          }
+          rules={{
+            required: 'Podaj rasę psa',
+            minLength: {
+              value: 3,
+              message: 'Podaj co najmniej 3 litery',
+            },
+            maxLength: {
+              value: 30,
+              message: 'Podaj co najwyżej 30 liter',
+            },
+            pattern: {
+              value: /^[^0-9]+$/i,
+              message: 'Nazwa nie powinna zawierać cyfr i znaków specjalnych',
+            },
+          }}
+          control={control}
+          defaultValue=""
+        />
+        <Controller
           name="litter"
           as={
             <CustomTextField
@@ -234,7 +264,7 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
               options={dogs
                 .filter(dog => !dog.sex)
                 .map(dog => {
-                  return { name: dog.name, value: dog.pkr };
+                  return { name: dog.pedigreeName, value: dog.pkr };
                 })}
               setValue={value => setValue('momPkr', value)}
             />
@@ -250,7 +280,7 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
               options={dogs
                 .filter(dog => dog.sex)
                 .map(dog => {
-                  return { name: dog.name, value: dog.pkr };
+                  return { name: dog.pedigreeName, value: dog.pkr };
                 })}
               setValue={value => setValue('dadPkr', value)}
             />
@@ -293,7 +323,12 @@ export const AddDogForm: React.FC<AddDogFormProps> = ({
           <Button color="primary" variant="outlined" onClick={close}>
             Zamknij
           </Button>
-          <Button color="primary" variant="contained" type="submit">
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            disabled={isEmpty(breedings)}
+          >
             Dodaj psa
           </Button>
         </div>

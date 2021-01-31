@@ -57,7 +57,15 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
   };
 
   return (
-    <CustomModal title={dog?.name ?? ''} open={open} close={close}>
+    <CustomModal
+      title={
+        dog?.pedigreeName || dog?.name
+          ? `${dog?.pedigreeName + ' | ' + dog?.name}`
+          : ''
+      }
+      open={open}
+      close={close}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="name"
@@ -96,10 +104,10 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
               options={dogs
                 .filter(d => !d.sex && d.pkr !== dog.pkr)
                 .map(dog => {
-                  return { name: dog.name, value: dog.pkr };
+                  return { name: dog.pedigreeName, value: dog.pkr };
                 })}
               setValue={value => setValue('momPkr', value)}
-              disabled={mom?.name}
+              disabled={mom?.pedigreeName}
             />
           }
           control={control}
@@ -113,10 +121,10 @@ export const UpdateDogFrom: React.FC<UpdateDogFromProps> = ({
               options={dogs
                 .filter(d => d.sex && d.pkr !== dog.pkr)
                 .map(dog => {
-                  return { name: dog.name, value: dog.pkr };
+                  return { name: dog.pedigreeName, value: dog.pkr };
                 })}
               setValue={value => setValue('dadPkr', value)}
-              disabled={dad?.name}
+              disabled={dad?.pedigreeName}
             />
           }
           control={control}

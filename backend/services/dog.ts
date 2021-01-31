@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { id } from 'date-fns/locale';
 
 const prisma = new PrismaClient();
 
@@ -8,6 +9,7 @@ export interface AddDogRequest {
   sex: boolean;
   name: string;
   pedigreeName: string;
+  breed: string;
   litter: string;
   breedingName: string;
   momPkr?: string;
@@ -21,9 +23,23 @@ export interface UpdateDogRequest {
   phisical?: string;
 }
 
-export interface UpdateTitles {
-  title: string;
-}
+// const changePKR = async () => {
+//   const dogs = await prisma.dog.findMany();
+
+//   dogs.map(async el => {
+//     const zmienna = el.pkr.replace('X.', '.V');
+//     await prisma.dog.update({
+//       where: {
+//         id: el.id,
+//       },
+//       data: {
+//         pkr: zmienna,
+//       },
+//     });
+//   });
+
+//   return dogs;
+// };
 
 const getAllDogs = async () => {
   const dogs = await prisma.dog.findMany({
@@ -37,7 +53,7 @@ const getAllDogs = async () => {
 };
 
 const getDogWithChildren = async (pkr: string) => {
-  const dog = await prisma.dog.findUnique({
+  return await prisma.dog.findUnique({
     where: {
       pkr,
     },
@@ -53,7 +69,6 @@ const getDogWithChildren = async (pkr: string) => {
       },
     },
   });
-  return dog;
 };
 
 const updateDog = async (pkr: string, updateData: UpdateDogRequest) => {
@@ -76,11 +91,11 @@ const updateDog = async (pkr: string, updateData: UpdateDogRequest) => {
 };
 
 const addTitle = async (pkr: string, title: string) => {
-  const dog = await prisma.dog.findUnique({
-    where: { pkr },
-  });
-  if (dog) {
-    try {
+  try {
+    const dog = await prisma.dog.findUnique({
+      where: { pkr },
+    });
+    if (dog) {
       await prisma.dog.update({
         where: {
           pkr,
@@ -89,9 +104,9 @@ const addTitle = async (pkr: string, title: string) => {
           titles: [...dog?.titles, title],
         },
       });
-    } catch (err) {
-      console.log('err', err);
     }
+  } catch (err) {
+    console.log('err', err);
   }
 };
 
@@ -102,6 +117,7 @@ const addDog = async (dogData: AddDogRequest) => {
     sex,
     name,
     pedigreeName,
+    breed,
     litter,
     breedingName,
     momPkr,
@@ -114,6 +130,7 @@ const addDog = async (dogData: AddDogRequest) => {
       sex,
       name,
       pedigreeName,
+      breed,
       litter,
       breeding: { connect: { name: breedingName } },
       mom: momPkr ? { connect: { pkr: momPkr } } : undefined,
@@ -122,4 +139,11 @@ const addDog = async (dogData: AddDogRequest) => {
   });
 };
 
-export { getAllDogs, getDogWithChildren, updateDog, addDog, addTitle };
+export {
+  // changePKR,
+  getAllDogs,
+  getDogWithChildren,
+  updateDog,
+  addDog,
+  addTitle,
+};

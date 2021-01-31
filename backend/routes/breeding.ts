@@ -1,3 +1,4 @@
+import { Breeding } from '@prisma/client';
 import { Router } from 'express';
 import {
   addNewBreeding,
@@ -8,23 +9,35 @@ import {
 const breedingRouter = Router();
 
 breedingRouter.get('/breeding', async (req, res) => {
-  const breedings = await getBreedings();
-  res.status(200).json(breedings);
+  try {
+    const breedings = await getBreedings();
+    res.status(200).json(breedings);
+  } catch (err) {
+    res.status(400).json({ message: err });
+  }
 });
 
 breedingRouter.get('/breeding/:name', async (req, res) => {
   const { params } = req;
-  const breeding = await getBreedingByName(params.name);
-  res.status(200).json(breeding);
+  try {
+    const breeding = await getBreedingByName(params.name);
+    res.status(200).json(breeding);
+  } catch (err) {
+    res.status(400).json({ message: err });
+  }
 });
 
 breedingRouter.post('/breeding', async (req, res) => {
   const { body } = req;
   if (body?.webPage && body?.name) {
-    await addNewBreeding(body.webPage, body.name);
-    res.status(200).json({ message: 'Dodano hodowlę' });
+    try {
+      await addNewBreeding(body.webPage, body.name);
+      res.status(201).json({ message: 'Dodano hodowlę' });
+    } catch (err) {
+      res.status(400).json({ message: err });
+    }
   } else {
-    res.status(400).json({ message: 'Empty body' });
+    res.status(404).json({ message: 'Puste dane' });
   }
 });
 

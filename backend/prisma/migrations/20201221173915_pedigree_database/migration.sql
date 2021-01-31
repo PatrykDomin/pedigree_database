@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "Breeding" (
-"id" SERIAL,
+    "id" SERIAL,
     "name" TEXT NOT NULL,
     "contactPage" TEXT NOT NULL,
-
+    
     PRIMARY KEY ("id")
 );
 

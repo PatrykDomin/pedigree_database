@@ -18,27 +18,22 @@ model Breeding {
 }
 
 model Dog {
-  id  Int    @id @default(autoincrement())
-  pkr String @unique
-
-  birth DateTime
-
-  sex          Boolean @default(true) // true -> dog // false -> bitch
+  id           Int      @id @default(autoincrement())
+  pkr          String   @unique
+  birth        DateTime
+  sex          Boolean  @default(true)
   litter       String
   name         String
   pedigreeName String
-
-  momId Int?
-  dadId Int?
-  mom   Dog? @relation("mom", fields: [momId], references: [id])
-  dad   Dog? @relation("dad", fields: [dadId], references: [id])
-
-  momChildren Dog[] @relation("mom")
-  dadChildren Dog[] @relation("dad")
-
-  titles   String[]
-  phisical String? //url
-
-  breedingId Int
-  breeding   Breeding @relation(fields: [breedingId], references: [id])
+  breed        String
+  momId        Int?
+  dadId        Int?
+  mom          Dog?     @relation("mom", fields: [momId], references: [id])
+  dad          Dog?     @relation("dad", fields: [dadId], references: [id])
+  momChildren  Dog[]    @relation("mom")
+  dadChildren  Dog[]    @relation("dad")
+  titles       String[]
+  phisical     String? //url
+  breedingId   Int
+  breeding     Breeding @relation(fields: [breedingId], references: [id])
 }

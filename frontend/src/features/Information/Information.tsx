@@ -12,20 +12,13 @@ export const Information: React.FC = () => {
         <div className={styles.content}>
           <h2>Czym jest baza rodowodowa?</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt
-            dolorum eos iste ipsa quam, fugit aut architecto placeat iure odit
-            hic repudiandae consectetur alias molestias perspiciatis dolores
-            quibusdam quis! Earum. Quos porro, alias, provident necessitatibus
-            voluptates sunt officiis doloribus sint iste quod dolore eos
-            reprehenderit illum. Eveniet ea eos natus, rem modi aut accusantium
-            quisquam sed voluptatibus qui, non tenetur! Temporibus possimus,
-            explicabo illum in similique enim tempore placeat. Eum nostrum
-            obcaecati harum delectus consectetur error, dignissimos ipsum.
-            Mollitia vero quidem numquam minima iusto vel dolores officia
-            inventore quod a. Assumenda explicabo saepe porro sed voluptatibus
-            quis similique repellat soluta quia sit tempora minima omnis, quae
-            cumque earum maiores amet molestiae? Ratione mollitia eligendi
-            magnam debitis optio ex suscipit asperiores.
+            Baza rodowodowa to system, dzięki któremu hodowcy jak i przyszli
+            właściciele psów mogą sprawdzić informacje na temat interesujących
+            ich psów, czy też hodowli. Można prześledzić drzewo genealogiczne
+            wybranego psa, zobaczyć jego mioty, osiągnięcia, czy też aktualne
+            badania. System jest intuicyjny w obsłudze oraz stawia na prostotę
+            działania z minimalną ilością danych potrzebnych do jego
+            funkcjonowania.
           </p>
         </div>
         <div
@@ -37,20 +30,14 @@ export const Information: React.FC = () => {
         <div className={styles.content}>
           <h2>Czym jest hodowla?</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt
-            dolorum eos iste ipsa quam, fugit aut architecto placeat iure odit
-            hic repudiandae consectetur alias molestias perspiciatis dolores
-            quibusdam quis! Earum. Quos porro, alias, provident necessitatibus
-            voluptates sunt officiis doloribus sint iste quod dolore eos
-            reprehenderit illum. Eveniet ea eos natus, rem modi aut accusantium
-            quisquam sed voluptatibus qui, non tenetur! Temporibus possimus,
-            explicabo illum in similique enim tempore placeat. Eum nostrum
-            obcaecati harum delectus consectetur error, dignissimos ipsum.
-            Mollitia vero quidem numquam minima iusto vel dolores officia
-            inventore quod a. Assumenda explicabo saepe porro sed voluptatibus
-            quis similique repellat soluta quia sit tempora minima omnis, quae
-            cumque earum maiores amet molestiae? Ratione mollitia eligendi
-            magnam debitis optio ex suscipit asperiores.
+            Pytanie proste, a zarazem trudne. Najlepiej przytoczyć informacje na
+            temat tego jaki jest jej cel, aby móc to pojęcie lepiej zrozumieć.
+            Celem hodowli oraz jej prowadzenie już takie proste nie są. Samym
+            celem hodowli jest utrzymanie jak najzdrowszych i najsilniejszych
+            fizycznych, psychicznych, jak i użytkowych cech w danej rasie. A co
+            za tym idzie, szukanie jak najlepszych reproduktorów czy też suk
+            hodowlanych, dobrze dobranych do danego psa, aby wymienione cechy
+            były jak najsilniejsze.
           </p>
         </div>
         <div

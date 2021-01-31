@@ -170,7 +170,7 @@ export const Dogs: React.FC = () => {
                       startingIndex * DOGS_PER_PAGE + DOGS_PER_PAGE
                     )
                     .map(
-                      ({ pkr, birth, pedigreeName, mom, dad, breeding }, i) => {
+                      ({ pkr, pedigreeName, mom, dad, breeding, breed }, i) => {
                         return (
                           <Grid
                             key={pkr}
@@ -192,8 +192,8 @@ export const Dogs: React.FC = () => {
                             </Grid>
                             <Grid item xs={1}>
                               <DataCell
-                                header="Narodziny"
-                                content={format(parseISO(birth), 'dd.MM.yyyy')}
+                                header="Rasa"
+                                content={breed}
                                 smallContent
                               />
                             </Grid>

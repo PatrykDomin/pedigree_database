@@ -31,9 +31,9 @@ export const Dog: React.FC = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showTitleModal, setShowTitleModal] = useState(false);
-  const [dogData, setDogData] = useState<DogWithLittersType>();
   const [showLitters, setShowLitters] = useState<number | null>(null);
 
+  const [dogData, setDogData] = useState<DogWithLittersType>();
   const getDogWithChildren = useCallback(async (pkr: string) => {
     const response = await fetch(`http://localhost:4200/dog/${pkr}`);
     const data: DogWithLittersType = await response.json();

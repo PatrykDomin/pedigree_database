@@ -6,6 +6,7 @@ export interface DogType {
   litter: string;
   name: string;
   pedigreeName: string;
+  breed: string;
   momChildren?: DogType[];
   dadChildren?: DogType[];
   mom?: DogType | null;

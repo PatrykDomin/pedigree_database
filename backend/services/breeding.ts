@@ -12,7 +12,7 @@ const getBreedings = async () => {
 };
 
 const getBreedingByName = async (name: string) => {
-  const breedings = await prisma.breeding.findMany({
+  const breedings = await prisma.breeding.findUnique({
     include: {
       dogs: true,
     },
